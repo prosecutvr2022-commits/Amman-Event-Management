@@ -1,0 +1,8 @@
+{
+  "name": "Amman Event Management | J. Balamurugan",
+  "description": "Premier event planning and complete event management by J. Balamurugan, based in Vittukatti, Thiruthuraipoondi. Weddings, corporate events, celebrations, catering, photography, and traditional Chenda Melam.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
