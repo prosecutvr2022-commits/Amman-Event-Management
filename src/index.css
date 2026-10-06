@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    color: #F8FAFC;
+    background-color: #070D1E;
+    overflow-x: hidden;
+  }
+}
+
+.font-display {
+  font-family: 'Cinzel', Georgia, serif;
+}
+
+.font-serif {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.font-script {
+  font-family: 'Alex Brush', cursive;
+}
+
+.font-sans {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+/* Luxury gold text and metallic accents */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #F5D77F 0%, #D4AF37 45%, #AA822A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gold-light {
+  background: linear-gradient(135deg, #FFF1C5 0%, #E6CA65 50%, #C5A059 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bg-gold-gradient {
+  background: linear-gradient(135deg, #DFB76C 0%, #C5A059 50%, #9B782E 100%);
+}
+
+.bg-gold-gradient-hover:hover {
+  background: linear-gradient(135deg, #F0C980 0%, #D4AF37 50%, #B88E36 100%);
+}
+
+.border-gold-subtle {
+  border-color: rgba(212, 175, 55, 0.25);
+}
+
+.border-gold-shine {
+  border-color: rgba(223, 183, 108, 0.5);
+}
+
+.gold-glow {
+  box-shadow: 0 0 35px -5px rgba(212, 175, 55, 0.25);
+}
+
+.gold-glow-sm {
+  box-shadow: 0 0 15px -3px rgba(212, 175, 55, 0.2);
+}
+
+/* Custom scrollbar for modern feel */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #070D1E;
+}
+::-webkit-scrollbar-thumb {
+  background: #1A2F5A;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C5A059;
+}
