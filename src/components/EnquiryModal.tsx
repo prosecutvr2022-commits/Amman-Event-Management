@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { X, Sparkles, Send, MessageCircle, Check, Phone } from 'lucide-react';
+import { X, Sparkles, Send, MessageCircle, Check, Phone, Loader2, AlertCircle } from 'lucide-react';
 import { BRAND_INFO, ALL_SERVICES } from '../data/eventData';
+import { submitToFormBold } from '../config/formbold';
 
 interface EnquiryModalProps {
   isOpen: boolean;
@@ -22,6 +23,8 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [notes, setNotes] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [phoneError, setPhoneError] = useState('');
 
   useEffect(() => {
@@ -67,13 +70,41 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
     return `https://wa.me/919524516821?text=${text}`;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!phone.trim() || phone.length < 8) {
       setPhoneError('Please enter a valid phone number');
       return;
     }
-    setIsSuccess(true);
+
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      const result = await submitToFormBold({
+        name: name || 'Customer',
+        phone,
+        eventType,
+        eventDate: eventDate || 'To be decided',
+        location,
+        guestCount,
+        services: selectedServices.join(', ') || 'General Consultation',
+        notes: notes || 'None',
+        formName: 'Quick Event Enquiry Modal',
+        submittedAt: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
+      });
+
+      if (result.success) {
+        setIsSuccess(true);
+      } else {
+        setSubmitError(result.message || 'Submission failed. You can also chat on WhatsApp.');
+      }
+    } catch (err: any) {
+      console.error('FormBold error in modal:', err);
+      setSubmitError('Failed to connect to FormBold. You can also message us directly on WhatsApp.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -274,13 +305,35 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
                 />
               </div>
 
+              {submitError && (
+                <div className="p-3 rounded-xl bg-red-950/60 border border-red-500/50 text-red-200 text-xs flex items-start gap-2">
+                  <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+                  <div className="flex-1">
+                    <p className="font-semibold">{submitError}</p>
+                    <p className="text-[11px] text-red-300/80 mt-0.5">
+                      You can also connect with J. Balamurugan immediately on WhatsApp.
+                    </p>
+                  </div>
+                </div>
+              )}
+
               <div className="pt-2 flex flex-col sm:flex-row items-center gap-3">
                 <button
                   type="submit"
-                  className="w-full sm:flex-1 py-3.5 px-6 rounded-xl bg-gold-gradient bg-gold-gradient-hover text-[#070D1E] font-bold text-xs sm:text-sm uppercase tracking-wider shadow-lg hover:shadow-[#D4AF37]/30 transition-all cursor-pointer flex items-center justify-center gap-2"
+                  disabled={isSubmitting}
+                  className="w-full sm:flex-1 py-3.5 px-6 rounded-xl bg-gold-gradient hover:bg-gold-gradient-hover text-[#070D1E] font-bold text-xs sm:text-sm uppercase tracking-wider shadow-lg hover:shadow-[#D4AF37]/30 transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed active:scale-95"
                 >
-                  <Send className="w-4 h-4" />
-                  <span>Submit Request</span>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 text-[#070D1E] animate-spin" />
+                      <span>Sending to FormBold...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      <span>Submit Request</span>
+                    </>
+                  )}
                 </button>
 
                 <a

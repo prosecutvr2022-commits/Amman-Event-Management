@@ -1,14 +1,24 @@
-import React from 'react';
-import { Heart, Sparkles, Check, ArrowRight, MessageCircle } from 'lucide-react';
+import React, { useState } from 'react';
+import { Heart, Sparkles, Check, ArrowRight, MessageCircle, Maximize2, X } from 'lucide-react';
 import { BRAND_INFO } from '../data/eventData';
 import { ServiceArtwork } from './ServiceArtwork';
-import { MandalaMotif } from './MandalaMotif';
+import { GrandStageDecorSlot } from './GrandStageDecorSlot';
+import { getAssetUrl, handleImageErrorFallback } from '../utils/assetHelper';
+
+
 
 interface WeddingShowcaseProps {
   onPlanWedding: () => void;
 }
 
 export const WeddingShowcase: React.FC<WeddingShowcaseProps> = ({ onPlanWedding }) => {
+  const [selectedPhoto, setSelectedPhoto] = useState<null | {
+    src: string;
+    fallbackPng: string;
+    title: string;
+    desc: string;
+  }>(null);
+
   const weddingServices = [
     { title: 'Wedding & Reception Planning', desc: 'Auspicious Muhurtham stage decor, grand arches, and VIP guest management.' },
     { title: 'Destination Weddings', desc: 'Curated coastal, heritage and resort weddings across Tamil Nadu with guest transit.' },
@@ -59,17 +69,54 @@ export const WeddingShowcase: React.FC<WeddingShowcaseProps> = ({ onPlanWedding 
               </div>
             </div>
 
+            {/* The Two Real Masterpiece Stage Photos with Set PNG Photo Permanently support */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Photo 1: Luminous Teal Lotus Halo Stage */}
+              <GrandStageDecorSlot
+                id="grand-stage-teal-halo"
+                title="Luminous Teal Lotus Halo & Ginkgo Canopy Stage"
+                badgeLabel="Teal Halo Stage"
+                subLabel="Monogram Reception"
+                description="Bespoke reception stage featuring radiant warm backlit lotus petals, peacock teal drapery, suspended white wisteria canopy, floral monogram crest (JP), and fluted camel shell sofa."
+                onOpenLightbox={() =>
+                  setSelectedPhoto({
+                    src: getAssetUrl('images/grand-stage-teal-halo.webp'),
+                    fallbackPng: getAssetUrl('images/grand-stage-teal-halo.png'),
+                    title: 'Luminous Teal Lotus Halo & Ginkgo Canopy Stage',
+                    desc: 'Bespoke reception stage featuring radiant warm backlit lotus petals, peacock teal drapery, suspended white wisteria canopy, floral monogram crest (JP), and fluted camel shell sofa.',
+                  })
+                }
+              />
+
+              {/* Photo 2: Sri Andal & Ranganathar Sacred Temple Mandapam */}
+              <GrandStageDecorSlot
+                id="grand-stage-aandal-mandap"
+                title="Sri Andal & Ranganathar Sacred Temple Mandapam"
+                badgeLabel="Andal Mandapam"
+                subLabel="Sacred Muhurtham"
+                description="Grand South Indian Muhurtham mandapam with carved golden Dravidian temple pillars, dual deity sanctum shrines, dense pink and red rose floral wall, and royal silver chaise throne."
+                onOpenLightbox={() =>
+                  setSelectedPhoto({
+                    src: getAssetUrl('images/grand-stage-aandal-mandap.webp'),
+                    fallbackPng: getAssetUrl('images/grand-stage-aandal-mandap.png'),
+                    title: 'Sri Andal & Ranganathar Sacred Temple Mandapam',
+                    desc: 'Grand South Indian Muhurtham mandapam with carved golden Dravidian temple pillars, dual deity sanctum shrines, dense pink and red rose floral wall, and royal silver chaise throne.',
+                  })
+                }
+              />
+            </div>
+
             {/* Sub-strip with Chenda Melam & Thamboolam previews */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="h-36 rounded-2xl overflow-hidden border border-slate-800 relative bg-slate-950">
+            <div className="grid grid-cols-2 gap-4 pt-1">
+              <div className="h-28 rounded-2xl overflow-hidden border border-slate-800 relative bg-slate-950">
                 <ServiceArtwork id="chenda-melam" title="Chenda Melam" />
-                <div className="absolute bottom-2 left-2 text-[11px] font-bold text-[#FCA5A5] bg-black/70 px-2 py-0.5 rounded">
+                <div className="absolute bottom-2 left-2 text-[10px] font-bold text-[#FCA5A5] bg-black/70 px-2 py-0.5 rounded">
                   Chenda Melam Troupe
                 </div>
               </div>
-              <div className="h-36 rounded-2xl overflow-hidden border border-slate-800 relative bg-slate-950">
+              <div className="h-28 rounded-2xl overflow-hidden border border-slate-800 relative bg-slate-950">
                 <ServiceArtwork id="thamboolam-bags" title="Thamboolam Bags" />
-                <div className="absolute bottom-2 left-2 text-[11px] font-bold text-[#A7F3D0] bg-black/70 px-2 py-0.5 rounded">
+                <div className="absolute bottom-2 left-2 text-[10px] font-bold text-[#A7F3D0] bg-black/70 px-2 py-0.5 rounded">
                   Thamboolam Return Gifts
                 </div>
               </div>
@@ -80,7 +127,7 @@ export const WeddingShowcase: React.FC<WeddingShowcaseProps> = ({ onPlanWedding 
           <div className="lg:col-span-6 space-y-6">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#13284F] border border-[#DFB76C]/30 text-xs text-[#E6CA65]">
               <Heart className="w-3.5 h-3.5 fill-[#DFB76C] text-[#DFB76C]" />
-              <span className="font-semibold uppercase tracking-wider">WEDDINGS & CELEBRATIONS</span>
+              <span className="font-semibold uppercase tracking-wider">WEDDINGS &amp; CELEBRATIONS</span>
             </div>
 
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight [text-wrap:balance]">
@@ -132,6 +179,73 @@ export const WeddingShowcase: React.FC<WeddingShowcaseProps> = ({ onPlanWedding 
           </div>
         </div>
       </div>
+
+      {/* Lightbox Modal for Full View */}
+      {selectedPhoto && (
+        <div
+          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-6"
+          onClick={() => setSelectedPhoto(null)}
+        >
+          <div
+            className="relative max-w-4xl w-full bg-slate-950 border-2 border-[#DFB76C]/60 rounded-2xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="p-4 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between">
+              <div>
+                <span className="text-xs font-mono text-[#DFB76C] font-bold uppercase">
+                  Featured Stage Masterpiece
+                </span>
+                <h4 className="text-lg font-serif font-bold text-white mt-0.5">
+                  {selectedPhoto.title}
+                </h4>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSelectedPhoto(null)}
+                className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-all cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal Image */}
+            <div className="relative aspect-[16/9] max-h-[70vh] bg-black flex items-center justify-center overflow-hidden">
+              <picture className="w-full h-full flex items-center justify-center">
+                <source srcSet={selectedPhoto.src} type="image/webp" />
+                <img
+                  src={selectedPhoto.fallbackPng}
+                  alt={selectedPhoto.title}
+                  className="w-full h-full object-contain select-none"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    if (target.src !== selectedPhoto.fallbackPng) {
+                      target.src = selectedPhoto.fallbackPng;
+                    }
+                  }}
+                />
+              </picture>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="p-4 bg-slate-900 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-slate-800">
+              <p className="text-xs text-slate-300 text-center sm:text-left font-light max-w-xl">
+                {selectedPhoto.desc}
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedPhoto(null);
+                  onPlanWedding();
+                }}
+                className="px-5 py-2.5 rounded-lg bg-[#DFB76C] text-slate-950 text-xs font-bold hover:bg-[#F5D77F] transition-all cursor-pointer whitespace-nowrap"
+              >
+                Book This Stage Setup
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

@@ -21,8 +21,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenEnquiry }) => {
   const navLinks = [
     { label: 'Home', href: '#home' },
     { label: 'Highlight Reel', href: '#featured-video' },
+    { label: 'Certified & Govt Regd', href: '#certified-professional' },
     { label: 'About', href: '#about' },
     { label: 'Services', href: '#services' },
+    { label: 'Our Works', href: '#our-works' },
     { label: 'Our Events', href: '#wedding-showcase' },
     { label: 'Gallery', href: '#gallery' },
     { label: 'Testimonials', href: '#testimonials' },

@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Sparkles, MessageCircle, ChevronRight, Volume2, VolumeX, Play, Pause, MapPin } from 'lucide-react';
 import { BRAND_INFO } from '../data/eventData';
 import { MandalaMotif } from './MandalaMotif';
+import { getAssetUrl } from '../utils/assetHelper';
 
 interface HeroProps {
   onOpenEnquiry: () => void;
@@ -110,7 +111,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEnquiry }) => {
       <div className="absolute inset-0 w-full h-full overflow-hidden z-0 bg-[#070D1E]">
         <video
           ref={videoRef}
-          poster="/hero_event_poster.jpg"
+          poster={getAssetUrl('hero_event_poster.jpg')}
           autoPlay
           muted={isMuted}
           loop
@@ -119,8 +120,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEnquiry }) => {
           className="w-full h-full object-cover object-center pointer-events-none"
           aria-label="Amman Event Management Promotional Video"
         >
-          <source src="/hero_event_video.mp4" type="video/mp4" />
-          <source src="./hero_event_video.mp4" type="video/mp4" />
+          <source src={getAssetUrl('hero_event_video.mp4')} type="video/mp4" />
         </video>
 
         {/* 2. Dark Subtle Overlay: Keeps Video Vibrant While Ensuring High Text Readability */}

@@ -23,7 +23,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
         <div className="text-center max-w-3xl mx-auto mb-14">
           <div className="inline-flex items-center gap-2 mb-3 px-3 py-1 rounded-full bg-[#13284F]/80 border border-[#DFB76C]/30 text-xs text-[#E6CA65]">
             <Sparkles className="w-3.5 h-3.5" />
-            <span className="font-semibold uppercase tracking-wider">WE UNDERTAKE 17+ EVENT CAPABILITIES</span>
+            <span className="font-semibold uppercase tracking-wider">WE UNDERTAKE 26+ EVENT CAPABILITIES</span>
           </div>
           <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4 [text-wrap:balance]">
             Everything You Need for a Perfect Event

@@ -98,6 +98,17 @@ export const Footer: React.FC<FooterProps> = ({ onOpenEnquiry }) => {
               >
                 <MessageCircle className="w-4 h-4" />
               </a>
+              <a
+                href={BRAND_INFO.googleReviewsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="h-9 px-2.5 rounded-lg bg-slate-900 border border-[#DFB76C]/40 flex items-center justify-center gap-1.5 text-xs text-[#DFB76C] hover:text-white hover:border-[#DFB76C] transition-colors"
+                title="Google 5-Star Reviews"
+                aria-label="Google 5-Star Reviews"
+              >
+                <span className="font-bold text-[11px]">5.0 ★</span>
+                <span className="text-[10px] hidden sm:inline">Google</span>
+              </a>
             </div>
           </div>
 

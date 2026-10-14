@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Play, Pause, Volume2, VolumeX, Sparkles, MessageCircle, Heart, Share2, CheckCircle2, Upload, Award } from 'lucide-react';
 import { BRAND_INFO } from '../data/eventData';
+import { getAssetUrl } from '../utils/assetHelper';
 
 interface HeroVideoPlayerProps {
   onOpenEnquiry?: () => void;
@@ -159,7 +160,7 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = ({ onOpenEnquiry 
           {/* HTML5 Video Element with source children for maximum browser compatibility */}
           <video
             ref={videoRef}
-            poster="/hero_event_poster.jpg"
+            poster={getAssetUrl('hero_event_poster.jpg')}
             autoPlay
             loop
             muted={isMuted}
@@ -168,7 +169,7 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = ({ onOpenEnquiry 
             onClick={togglePlay}
             aria-label="Amman Event Management Wedding Reel"
           >
-            <source src={customVideoSrc || '/hero_event_video.mp4'} type="video/mp4" />
+            <source src={customVideoSrc || getAssetUrl('hero_event_video.mp4')} type="video/mp4" />
           </video>
 
           {/* Fallback Graphic Simulation Layer if video is loading or decoding */}

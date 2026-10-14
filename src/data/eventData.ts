@@ -23,6 +23,7 @@ export const BRAND_INFO = {
   instagramUrl: 'https://instagram.com/AMMAN_EVENT_TTP',
   facebookPresence: 'Amman Event Management',
   youtubePresence: 'Amman Event TTP',
+  googleReviewsUrl: 'https://www.google.com/search?q=amman+event+management&oq=amman+event+&gs_lcrp=EgZjaHJvbWUqBwgBEAAYgAQyCggAEEUYFhgeGDkyBwgBEAAYgAQyCAgCEAAYFhgeMggIAxAAGBYYHjIICAQQABgWGB4yBggFEEUYPDIGCAYQRRg8MgYIBxBFGD3SAQkxMTM4OGowajeoAgiwAgHxBQVyP2I7sNVF&sourceid=chrome&source=chrome.ob&ie=UTF-8#lrd=0x3a555b0007c843ef:0x1733f24a268ef0a7,1,,,,',
 };
 
 // All 17 exact services from the attached banner grouped into 4 intelligent categories
@@ -220,15 +221,116 @@ export const ALL_SERVICES: EventService[] = [
     iconName: 'Music',
     bgGradient: 'from-red-950/60 via-slate-900 to-slate-950',
     features: ['Grand Wedding Processions', 'Traditional Kasavu Uniforms', 'Panchari & Pandi Melam Artists', 'Kombu & Thavil Combinations', 'Unmatched Festive Euphoria']
+  },
+
+  // NEW DEDICATED WEDDING & EVENT SERVICES
+  {
+    id: 'violin-program',
+    name: 'Violin Program',
+    category: 'creative',
+    shortDesc: 'Soul-stirring classical, Carnatic fusion, and romantic film violin recitals for receptions and muhurthams.',
+    fullDesc: 'Elevate your event ambiance with melodious acoustic and electric violin performances. Master violin virtuosos perform classical ragas, Carnatic fusion, and evergreen instrumental melodies accompanied by rhythm artists.',
+    highlight: 'Melodious Classical & Fusion Recital',
+    iconName: 'Music',
+    bgGradient: 'from-purple-950/60 via-slate-900 to-slate-950',
+    features: ['Acoustic & Electric Violin Sets', 'Carnatic & Film Melodies Fusion', 'Reception Stage Ambiance', 'Dedicated Audio Tuning', 'Soloists & Ensemble Formats']
+  },
+  {
+    id: 'melam-nadhasvaram',
+    name: 'Melam & Nadhasvaram',
+    category: 'complete',
+    shortDesc: 'Auspicious traditional Mangala Vathiyam with master Nadhasvaram & Thavil vidwans for sacred muhurtham and baraat.',
+    fullDesc: 'Traditional South Indian wedding music heralding divine blessings. Experienced vidwans deliver resonant auspicious ragas throughout the groom procession, Kasi Yatra, and sacred Thali tying Muhurtham.',
+    highlight: 'Auspicious Mangala Vathiyam & Thavil',
+    iconName: 'Music',
+    bgGradient: 'from-amber-950/60 via-slate-900 to-slate-950',
+    features: ['Master Nadhasvaram & Thavil Vidwans', 'Kasi Yatra & Jaanavasam Melam', 'Sacred Muhurtham Ragas', 'Temple & Hall Processions', 'Traditional Silk Ponnada Attire']
+  },
+  {
+    id: 'aiyar',
+    name: 'Aiyar',
+    category: 'weddings',
+    shortDesc: 'Experienced Vedic Vadhyar & Purohit services for authentic Hindu wedding rituals, Homam, and sacred ceremonies.',
+    fullDesc: 'Complete traditional ritual guidance by knowledgeable Vedic priests following proper sastras and family customs. Includes Ganapathi Homam, Navagraha Pooja, Kanyadaanam, and Mangalya Dharanam coordination.',
+    highlight: 'Vedic Vadhyar & Sacred Rituals',
+    iconName: 'Sparkles',
+    bgGradient: 'from-orange-950/60 via-slate-900 to-slate-950',
+    features: ['Learned Vedic Vadhyar / Purohits', 'Ganapathi & Navagraha Homam', 'Muhurtham Sastra Guidance', 'Sacred Pooja Samagri Coordination', 'Family Tradition Adherence']
+  },
+  {
+    id: 'manamakal-malai',
+    name: 'Manamakal Malai',
+    category: 'weddings',
+    shortDesc: 'Handcrafted luxury wedding garlands (Varmala) made with fresh exotic roses, fragrant jasmine, and gold zari detailing.',
+    fullDesc: 'Exquisite bridal and groom wedding garlands crafted with utmost devotion and artistry. Bespoke designs including layered Dutch rose petal malai, scented Madurai malli, lotus buds, and lightweight feather-soft knotting.',
+    highlight: 'Bespoke Bridal & Groom Garlands',
+    iconName: 'Heart',
+    bgGradient: 'from-rose-950/60 via-slate-900 to-slate-950',
+    features: ['Fresh Dutch Rose & Jasmine Malai', 'Custom Color Themes Matching Attire', 'Lightweight & Comfortable Wear', 'Lotus & Orchid Specialty Garlands', 'On-time Fresh Mandap Delivery']
+  },
+  {
+    id: 'arkestra-music',
+    name: 'Arkestra Music',
+    category: 'creative',
+    shortDesc: 'Grand live wedding orchestra, celebrity playback singers, dynamic keyboard, rhythm pads, and stage musical night.',
+    fullDesc: 'Full-fledged live musical troupe delivering high-voltage entertainment for sangeet, reception, and gala celebrations. Professional singers, energetic anchors, live rhythm section, and retro-to-latest hit songs customized to family preferences.',
+    highlight: 'High-Energy Live Stage Orchestra',
+    iconName: 'Music',
+    bgGradient: 'from-indigo-950/60 via-slate-900 to-slate-950',
+    features: ['Multi-Singer Live Troupe', 'Dynamic Live Sound & Digital Console', 'Bilingual Song Repertoire', 'Crowd-Engaging Stage Anchors', 'Custom Playlist & Requests']
+  },
+  {
+    id: 'food-stall',
+    name: 'Food Stall',
+    category: 'complete',
+    shortDesc: 'Interactive live wedding food counters featuring Delhi chaat, hot dosas, kulfi, mocktails, and sweet treats.',
+    fullDesc: 'Delight your guests with live culinary theater. Vibrant specialty food stalls including chaat counters, mini dosai varieties, popping corn, artisanal ice creams, chocolate fountain, and traditional herbal hot tea & filter coffee bars.',
+    highlight: 'Live Gourmet Food & Snack Counters',
+    iconName: 'Utensils',
+    bgGradient: 'from-yellow-950/60 via-slate-900 to-slate-950',
+    features: ['Live Dosa & Chaat Counters', 'Traditional Kumbakonam Degree Coffee', 'Kulfi, Ice Cream & Dessert Stalls', 'Popcorn & Cotton Candy for Kids', 'Hygienic Uniformed Live Chefs']
+  },
+  {
+    id: 'horse-chariot',
+    name: 'Horse Chariot',
+    category: 'weddings',
+    shortDesc: 'Majestic royal horse-drawn carriage (Sarath) and decorated white horse for royal groom entrance & Baraat.',
+    fullDesc: 'Make an unforgettable grand entrance with our ornate royal horse chariot. Handcrafted golden carriage with illuminated fairy lights, floral crests, disciplined trained white horses, and royal costumed charioteers.',
+    highlight: 'Royal Horse Carriage & Grand Baraat',
+    iconName: 'Award',
+    bgGradient: 'from-amber-950/60 via-slate-900 to-slate-950',
+    features: ['Regal Golden Sarath Carriage', 'Gentle & Well-Trained White Horses', 'Traditional Charioteer Uniforms', 'Floral & LED Carriage Decor', 'Spectacular Baraat Entrance Photos']
+  },
+  {
+    id: 'mack-up',
+    name: 'Mack Up',
+    category: 'weddings',
+    shortDesc: 'Professional bridal makeup, HD airbrush makeover, traditional saree draping, mehendi, and hair styling.',
+    fullDesc: 'Flawless bridal transformations by certified makeup artists. Tailored to enhance natural beauty for Muhurtham and Reception with high-definition sweat-proof cosmetics, intricate floral jadai hairdos, and perfect silk saree pleating.',
+    highlight: 'Luxury HD Bridal Makeup & Styling',
+    iconName: 'Sparkles',
+    bgGradient: 'from-pink-950/60 via-slate-900 to-slate-950',
+    features: ['HD & Airbrush Bridal Makeover', 'Long-Lasting Water-Resistant Finish', 'Traditional Muhurtham Jadai & Styling', 'Expert Silk Saree Draping', 'Pre-Bridal Trials & Consultation']
+  },
+  {
+    id: 'bridal-groom',
+    name: 'Bridal & Groom',
+    category: 'weddings',
+    shortDesc: 'Exclusive bride & groom entry concepts, floral chadars, sparkler walkways, couture styling & personal assistants.',
+    fullDesc: 'Turn your couple moments into breathtaking cinematic experiences. We coordinate dramatic bridal entry under floral umbrellas, cold pyrotechnic tunnels, couple costume color coordination, and dedicated on-site bride & groom coordinators.',
+    highlight: 'Cinematic Couple Entries & Coordination',
+    iconName: 'Heart',
+    bgGradient: 'from-red-950/60 via-slate-900 to-slate-950',
+    features: ['Floral Chadar & Phoolon Ki Chaadar', 'Cold Pyro & Sparkler Entry Walkway', 'Couple Color Coordination Styling', 'Personal Attendant for Couple', 'Choreographed Stage Entry Concepts']
   }
 ];
 
 export const SERVICE_CATEGORIES = [
-  { id: 'all', label: 'All Services', count: 17 },
-  { id: 'weddings', label: 'Weddings & Celebrations', count: 5 },
+  { id: 'all', label: 'All Services', count: 26 },
+  { id: 'weddings', label: 'Weddings & Celebrations', count: 10 },
   { id: 'corporate', label: 'Corporate & Brand Events', count: 4 },
-  { id: 'creative', label: 'Creative & Themed Events', count: 3 },
-  { id: 'complete', label: 'Complete Event Services', count: 5 }
+  { id: 'creative', label: 'Creative & Themed Events', count: 5 },
+  { id: 'complete', label: 'Complete Event Services', count: 7 }
 ] as const;
 
 export const GALLERY_ITEMS: GalleryItem[] = [
@@ -308,6 +410,36 @@ export const GALLERY_ITEMS: GalleryItem[] = [
 
 export const TESTIMONIALS: Testimonial[] = [
   {
+    id: 't-google-1',
+    name: 'Amulkathir Amulkathir',
+    event: 'Wedding & Events · Bala & Team',
+    location: 'Google Review · a year ago',
+    quote:
+      'Highly recommended! I am glad we went with Amman wedding & events . The entire team and especially Bala made sure everything was as per the plan.They make everything turn out into the way you want it to be and fulfill all your expectations and demands. Loved their work. They were amazing!',
+    rating: 5,
+    date: '1 year ago'
+  },
+  {
+    id: 't-google-2',
+    name: 'DURGAGOWRI. G',
+    event: 'Sadangu & Engagement (Decor, Food & Photo)',
+    location: 'Google Review · a month ago',
+    quote:
+      'Reasonable price. I have booked for my sadangu and engagement for decor, food and photography.very satisfied with their work. Budget Friendly too.',
+    rating: 5,
+    date: '1 month ago'
+  },
+  {
+    id: 't-google-3',
+    name: 'Nagarajan Muthukrishnan',
+    event: 'Audio, Lighting & Equipment Service',
+    location: 'Google Review · 8 months ago',
+    quote:
+      'They have provided excellent service with quality high standard equipment and accessories. The technician did his job well during the function. The rate is comparatively reasonable. I strongly recommend them for functions.',
+    rating: 5,
+    date: '8 months ago'
+  },
+  {
     id: 't1',
     name: 'S. Vigneshwaran & Deepa',
     event: 'Grand Wedding & Reception',
@@ -324,24 +456,6 @@ export const TESTIMONIALS: Testimonial[] = [
     quote: 'For my father\'s 60th milestone, everything from the traditional homam backdrop to catering and thamboolam bags was arranged smoothly under one roof. No running behind multiple vendors. Highly recommended.',
     rating: 5,
     date: 'January 2026'
-  },
-  {
-    id: 't3',
-    name: 'P. Manikandan',
-    event: 'Commercial Showroom & Brand Launch',
-    location: 'Tiruvarur',
-    quote: 'We needed a crisp, professional product launch with audio, stage, chief guest felicitation, and press management. Balamurugan handled the whole schedule with military precision.',
-    rating: 5,
-    date: 'December 2025'
-  },
-  {
-    id: 't4',
-    name: 'Anitha Karthik',
-    event: 'Baby’s 1st Birthday Theme Party',
-    location: 'Mannargudi',
-    quote: 'The jungle safari theme decor was beyond our expectations! Every child had a blast and our guests were in awe of the customized return gift hampers. Thank you Amman Events!',
-    rating: 5,
-    date: 'November 2025'
   }
 ];
 

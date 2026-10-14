@@ -7,11 +7,14 @@ import React, { useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { FeaturedReelSection } from './components/FeaturedReelSection';
+import { CertifiedProfessionalSection } from './components/CertifiedProfessionalSection';
 import { TrustStrip } from './components/TrustStrip';
 import { ServicesSection } from './components/ServicesSection';
+import { OurWorksCarouselSection } from './components/OurWorksCarouselSection';
 import { WhyChooseUs } from './components/WhyChooseUs';
 import { ProcessSection } from './components/ProcessSection';
 import { EventGallery } from './components/EventGallery';
+import { CraftedMomentsVideoSection } from './components/CraftedMomentsVideoSection';
 import { WeddingShowcase } from './components/WeddingShowcase';
 import { CorporateShowcase } from './components/CorporateShowcase';
 import { CompleteSolutions } from './components/CompleteSolutions';
@@ -50,11 +53,20 @@ export default function App() {
         {/* 2. Featured Viral Instagram Reel Section (Directly Below Hero) */}
         <FeaturedReelSection onPlanEvent={() => handleOpenEnquiry('Wedding')} />
 
+        {/* 2b. Certified Event Management Professional & Government Registered Company Section */}
+        <CertifiedProfessionalSection
+          onPlanEvent={() => handleOpenEnquiry('Certified Event Planner')}
+          onEnquire={() => handleOpenEnquiry()}
+        />
+
         {/* 3. Trust / Value Proposition Strip */}
         <TrustStrip />
 
         {/* 3. Services Section (All 17 Banner Services Categorized) */}
         <ServicesSection onSelectService={(srv) => handleOpenEnquiry(srv)} />
+
+        {/* Our Works Section (Carousel Mode of Real Setups below "Everything You Need for a Perfect Event") */}
+        <OurWorksCarouselSection onSelectWork={(work) => handleOpenEnquiry(work)} />
 
         {/* 4. Why Choose Amman Event Management */}
         <WhyChooseUs onOpenEnquiry={() => handleOpenEnquiry()} />
@@ -62,8 +74,11 @@ export default function App() {
         {/* 5. Event Planning Process (4 Steps) */}
         <ProcessSection />
 
-        {/* 6. Event Gallery */}
+        {/* 6. Event Gallery (Moments We’ve Crafted) */}
         <EventGallery onStartPlanning={() => handleOpenEnquiry()} />
+
+        {/* 6b. Live Celebration Video Section (Below Moments We’ve Crafted) */}
+        <CraftedMomentsVideoSection onOpenEnquiry={(srv) => handleOpenEnquiry(srv)} />
 
         {/* 7. Wedding & Celebration Section */}
         <WeddingShowcase onPlanWedding={() => handleOpenEnquiry('Wedding')} />

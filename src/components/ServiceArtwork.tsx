@@ -1,5 +1,9 @@
 import React from 'react';
 import { WeddingMandapArtwork } from './WeddingMandapArtwork';
+import { MelamNadhasvaramArtwork } from './MelamNadhasvaramArtwork';
+import { AiyarArtwork } from './AiyarArtwork';
+import { ManamakalMalaiArtwork } from './ManamakalMalaiArtwork';
+import { PermanentPhotoSlot } from './PermanentPhotoSlot';
 import { SectionArtworkWrapper } from './SectionArtworkWrapper';
 
 interface ServiceArtworkProps {
@@ -12,6 +16,102 @@ export const ServiceArtwork: React.FC<ServiceArtworkProps> = ({ id, className = 
   // Wedding has its own dedicated component that already has PNG only & Replace PNG
   if (id === 'wedding' || id === 'g1') {
     return <WeddingMandapArtwork className={className} title={title} />;
+  }
+
+  // Melam & Nadhasvaram section
+  if (id === 'melam-nadhasvaram') {
+    return (
+      <PermanentPhotoSlot
+        id="melam-nadhasvaram"
+        defaultLabel="Melam & Nadhasvaram"
+        className={className}
+        title={title}
+      />
+    );
+  }
+
+  // Aiyar section
+  if (id === 'aiyar') {
+    return (
+      <PermanentPhotoSlot
+        id="aiyar"
+        defaultLabel="Aiyar"
+        className={className}
+        title={title}
+      />
+    );
+  }
+
+  // Manamakal Malai section
+  if (id === 'manamakal-malai') {
+    return (
+      <PermanentPhotoSlot
+        id="manamakal-malai"
+        defaultLabel="Manamakal Malai"
+        className={className}
+        title={title}
+      />
+    );
+  }
+
+  // Arkestra Music section
+  if (id === 'arkestra-music') {
+    return (
+      <PermanentPhotoSlot
+        id="arkestra-music"
+        defaultLabel="Arkestra Music"
+        className={className}
+        title={title}
+      />
+    );
+  }
+
+  // Food Stall section
+  if (id === 'food-stall') {
+    return (
+      <PermanentPhotoSlot
+        id="food-stall"
+        defaultLabel="Food Stall"
+        className={className}
+        title={title}
+      />
+    );
+  }
+
+  // Horse Chariot section
+  if (id === 'horse-chariot') {
+    return (
+      <PermanentPhotoSlot
+        id="horse-chariot"
+        defaultLabel="Horse Chariot"
+        className={className}
+        title={title}
+      />
+    );
+  }
+
+  // Mack Up section
+  if (id === 'mack-up') {
+    return (
+      <PermanentPhotoSlot
+        id="mack-up"
+        defaultLabel="Mack Up"
+        className={className}
+        title={title}
+      />
+    );
+  }
+
+  // Bridal & Groom section
+  if (id === 'bridal-groom') {
+    return (
+      <PermanentPhotoSlot
+        id="bridal-groom"
+        defaultLabel="Bridal & Groom"
+        className={className}
+        title={title}
+      />
+    );
   }
 
   const renderDefaultArtwork = () => {

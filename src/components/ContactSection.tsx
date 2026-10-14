@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Phone, MessageCircle, MapPin, Instagram, Mail, Calendar, Users, Send, CheckCircle2, Sparkles, Clock } from 'lucide-react';
+import { Phone, MessageCircle, MapPin, Instagram, Mail, Calendar, Users, Send, CheckCircle2, Sparkles, Clock, Loader2, AlertCircle } from 'lucide-react';
 import { BRAND_INFO, ALL_SERVICES } from '../data/eventData';
 import { EnquiryFormData } from '../types';
+import { submitToFormBold } from '../config/formbold';
 
 interface ContactSectionProps {
   initialService?: string;
@@ -21,6 +22,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialService }
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [phoneError, setPhoneError] = useState('');
 
   const availableServices = [
@@ -59,14 +62,42 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialService }
     if (phoneError) setPhoneError('');
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.phone.trim() || formData.phone.length < 8) {
       setPhoneError('Please enter a valid 10-digit phone number so we can reach you.');
       return;
     }
 
-    setSubmitted(true);
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      const result = await submitToFormBold({
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        eventType: formData.eventType,
+        eventDate: formData.eventDate || 'To be decided',
+        eventLocation: formData.eventLocation,
+        guestCount: formData.guestCount,
+        services: formData.services,
+        message: formData.message || 'No additional notes provided',
+        formName: 'Main Contact Section Enquiry',
+        submittedAt: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
+      });
+
+      if (result.success) {
+        setSubmitted(true);
+      } else {
+        setSubmitError(result.message || 'Submission failed. Please try again or reach us via WhatsApp.');
+      }
+    } catch (err: any) {
+      console.error('FormBold error:', err);
+      setSubmitError('Failed to send to FormBold. You can also chat with us directly on WhatsApp.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const buildWhatsAppUrl = () => {
@@ -348,13 +379,35 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialService }
                     />
                   </div>
 
+                  {submitError && (
+                    <div className="p-3 rounded-xl bg-red-950/60 border border-red-500/50 text-red-200 text-xs flex items-start gap-2">
+                      <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+                      <div className="flex-1">
+                        <p className="font-semibold">{submitError}</p>
+                        <p className="text-[11px] text-red-300/80 mt-0.5">
+                          You can also reach J. Balamurugan instantly via WhatsApp or phone.
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
                   <div className="pt-2 flex flex-col sm:flex-row items-center gap-3">
                     <button
                       type="submit"
-                      className="w-full sm:flex-1 py-3.5 px-6 rounded-xl bg-gold-gradient bg-gold-gradient-hover text-[#070D1E] font-bold text-xs sm:text-sm uppercase tracking-wider shadow-lg hover:shadow-[#D4AF37]/30 transition-all cursor-pointer active:scale-95 flex items-center justify-center gap-2"
+                      disabled={isSubmitting}
+                      className="w-full sm:flex-1 py-3.5 px-6 rounded-xl bg-gold-gradient hover:bg-gold-gradient-hover text-[#070D1E] font-bold text-xs sm:text-sm uppercase tracking-wider shadow-lg hover:shadow-[#D4AF37]/30 transition-all cursor-pointer active:scale-95 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                     >
-                      <Send className="w-4 h-4" />
-                      <span>Send Event Enquiry</span>
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="w-4 h-4 text-[#070D1E] animate-spin" />
+                          <span>Sending to FormBold...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Send className="w-4 h-4" />
+                          <span>Send Event Enquiry</span>
+                        </>
+                      )}
                     </button>
 
                     <a

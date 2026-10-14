@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Play, Pause, Volume2, VolumeX, Maximize2, ExternalLink, Sparkles, Heart, Eye, MessageCircle, Share2, Instagram } from 'lucide-react';
+import { Play, Pause, Volume2, VolumeX, Maximize2, ExternalLink, Sparkles, Heart, Eye, MessageCircle, Share2, Instagram, ShieldCheck } from 'lucide-react';
 import { BRAND_INFO } from '../data/eventData';
 import { MandalaMotif } from './MandalaMotif';
 
@@ -56,7 +56,13 @@ export const FeaturedReelSection: React.FC<FeaturedReelSectionProps> = ({ onPlan
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0B152B] border border-[#DFB76C]/40 text-[#F5D77F] text-xs font-semibold uppercase tracking-widest mb-4 shadow-lg">
+          {/* Government Registered Company & Certified Professional Pill */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 via-[#DFB76C]/30 to-amber-500/20 border-2 border-[#DFB76C] text-[#F5D77F] text-xs sm:text-sm font-extrabold uppercase tracking-wider mb-4 shadow-[0_0_20px_rgba(223,183,108,0.25)]">
+            <ShieldCheck className="w-4 h-4 text-[#DFB76C]" />
+            <span>Government Registered Company • Certified Professional</span>
+          </div>
+
+          <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-[#0B152B] border border-[#DFB76C]/40 text-[#DFB76C] text-[11px] font-semibold uppercase tracking-widest mb-4 shadow-lg">
             <Sparkles className="w-3.5 h-3.5 text-[#DFB76C]" />
             <span>Featured Event Highlight</span>
             <Sparkles className="w-3.5 h-3.5 text-[#DFB76C]" />
@@ -70,7 +76,8 @@ export const FeaturedReelSection: React.FC<FeaturedReelSectionProps> = ({ onPlan
           </p>
           <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
             Experience the vibrant celebration, romantic couple entry dance, and joyous atmosphere planned and orchestrated by{' '}
-            <strong className="text-white font-semibold">{BRAND_INFO.businessName}</strong>.
+            <strong className="text-white font-semibold">{BRAND_INFO.businessName}</strong> — an officially certified,{' '}
+            <strong className="text-[#F5D77F]">Government Registered Event Management Enterprise</strong>.
           </p>
         </div>
 
