@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { Heart, Sparkles, Check, ArrowRight, MessageCircle, Maximize2, X } from 'lucide-react';
 import { BRAND_INFO } from '../data/eventData';
 import { ServiceArtwork } from './ServiceArtwork';
+import { MandalaMotif } from './MandalaMotif';
 import { GrandStageDecorSlot } from './GrandStageDecorSlot';
 import { getAssetUrl, handleImageErrorFallback } from '../utils/assetHelper';
-
-
 
 interface WeddingShowcaseProps {
   onPlanWedding: () => void;
@@ -14,7 +13,6 @@ interface WeddingShowcaseProps {
 export const WeddingShowcase: React.FC<WeddingShowcaseProps> = ({ onPlanWedding }) => {
   const [selectedPhoto, setSelectedPhoto] = useState<null | {
     src: string;
-    fallbackPng: string;
     title: string;
     desc: string;
   }>(null);
@@ -80,8 +78,7 @@ export const WeddingShowcase: React.FC<WeddingShowcaseProps> = ({ onPlanWedding 
                 description="Bespoke reception stage featuring radiant warm backlit lotus petals, peacock teal drapery, suspended white wisteria canopy, floral monogram crest (JP), and fluted camel shell sofa."
                 onOpenLightbox={() =>
                   setSelectedPhoto({
-                    src: getAssetUrl('images/grand-stage-teal-halo.webp'),
-                    fallbackPng: getAssetUrl('images/grand-stage-teal-halo.png'),
+                    src: '/images/grand-stage-teal-halo.webp',
                     title: 'Luminous Teal Lotus Halo & Ginkgo Canopy Stage',
                     desc: 'Bespoke reception stage featuring radiant warm backlit lotus petals, peacock teal drapery, suspended white wisteria canopy, floral monogram crest (JP), and fluted camel shell sofa.',
                   })
@@ -97,8 +94,7 @@ export const WeddingShowcase: React.FC<WeddingShowcaseProps> = ({ onPlanWedding 
                 description="Grand South Indian Muhurtham mandapam with carved golden Dravidian temple pillars, dual deity sanctum shrines, dense pink and red rose floral wall, and royal silver chaise throne."
                 onOpenLightbox={() =>
                   setSelectedPhoto({
-                    src: getAssetUrl('images/grand-stage-aandal-mandap.webp'),
-                    fallbackPng: getAssetUrl('images/grand-stage-aandal-mandap.png'),
+                    src: '/images/grand-stage-aandal-mandap.webp',
                     title: 'Sri Andal & Ranganathar Sacred Temple Mandapam',
                     desc: 'Grand South Indian Muhurtham mandapam with carved golden Dravidian temple pillars, dual deity sanctum shrines, dense pink and red rose floral wall, and royal silver chaise throne.',
                   })
@@ -211,20 +207,11 @@ export const WeddingShowcase: React.FC<WeddingShowcaseProps> = ({ onPlanWedding 
 
             {/* Modal Image */}
             <div className="relative aspect-[16/9] max-h-[70vh] bg-black flex items-center justify-center overflow-hidden">
-              <picture className="w-full h-full flex items-center justify-center">
-                <source srcSet={selectedPhoto.src} type="image/webp" />
-                <img
-                  src={selectedPhoto.fallbackPng}
-                  alt={selectedPhoto.title}
-                  className="w-full h-full object-contain select-none"
-                  onError={(e) => {
-                    const target = e.currentTarget;
-                    if (target.src !== selectedPhoto.fallbackPng) {
-                      target.src = selectedPhoto.fallbackPng;
-                    }
-                  }}
-                />
-              </picture>
+              <img
+                src={selectedPhoto.src}
+                alt={selectedPhoto.title}
+                className="w-full h-full object-contain select-none"
+              />
             </div>
 
             {/* Modal Footer */}
