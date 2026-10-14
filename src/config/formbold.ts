@@ -8,13 +8,19 @@
  * 3. Set VITE_FORMBOLD_FORM_ID in your environment, or replace DEFAULT_FORMBOLD_FORM_ID below.
  */
 
-export const DEFAULT_FORMBOLD_FORM_ID = 'your_form_id';
+export const DEFAULT_FORMBOLD_FORM_ID = '9BbgD';
 
 export const getFormBoldEndpoint = (customFormId?: string): string => {
   const formId =
-    customFormId ||
-    import.meta.env.VITE_FORMBOLD_FORM_ID ||
-    (typeof window !== 'undefined' ? localStorage.getItem('amman_formbold_form_id') : null) ||
+    (customFormId && customFormId.trim() && customFormId !== 'your_form_id' ? customFormId.trim() : null) ||
+    (import.meta.env.VITE_FORMBOLD_FORM_ID && import.meta.env.VITE_FORMBOLD_FORM_ID !== 'your_form_id'
+      ? import.meta.env.VITE_FORMBOLD_FORM_ID
+      : null) ||
+    (typeof window !== 'undefined' &&
+    localStorage.getItem('amman_formbold_form_id') &&
+    localStorage.getItem('amman_formbold_form_id') !== 'your_form_id'
+      ? localStorage.getItem('amman_formbold_form_id')
+      : null) ||
     DEFAULT_FORMBOLD_FORM_ID;
 
   return `https://formbold.com/s/${formId}`;
@@ -34,20 +40,6 @@ export async function submitToFormBold(
   customFormId?: string
 ): Promise<FormBoldSubmissionResult> {
   const endpoint = getFormBoldEndpoint(customFormId);
-
-  // If using placeholder ID, simulate success or allow local testing
-  if (endpoint.endsWith('/your_form_id')) {
-    console.info(
-      'FormBold Info: Using placeholder Form ID. To receive submissions in your email, set your FormBold Form ID in src/config/formbold.ts or VITE_FORMBOLD_FORM_ID.'
-    );
-    // Add artificial delay for realistic UX
-    await new Promise((resolve) => setTimeout(resolve, 800));
-    return {
-      success: true,
-      message: 'Enquiry received. To receive emails directly, configure your FormBold Form ID.',
-      isMockDemo: true,
-    };
-  }
 
   try {
     const formData = new FormData();

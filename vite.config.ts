@@ -5,9 +5,10 @@ import fs from 'fs';
 import sharp from 'sharp';
 import { defineConfig } from 'vite';
 
+const __dirname = import.meta.dirname ?? path.resolve();
+
 export default defineConfig(() => {
   return {
-    base: './',
     plugins: [
       react(),
       tailwindcss(),
