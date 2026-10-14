@@ -6,8 +6,8 @@ import {
   Sparkles,
   CalendarCheck,
   X,
+} from 'lucide-react';
 import { getAssetUrl, handleImageErrorFallback } from '../utils/assetHelper';
-
 
 export interface WorkItem {
   id: string;
@@ -90,7 +90,7 @@ const WORKS_DATA: WorkItem[] = [
   {
     id: 'work-7',
     number: '07',
-    title: 'Traditional Wedding Golu Dolls & Sprounding Mulaipari Seer',
+    title: 'Traditional Wedding Golu Dolls & Sprouting Mulaipari Seer',
     category: 'Authentic South Indian Seer Display & Rituals',
     description:
       'Handcrafted wedding doll (Golu / Bommai) figurines with couple and family photo toppers, ceremonial silk umbrellas, sprouting auspicious Mulaipari pots, and "ALL IS WELL" marriage banners.',
@@ -254,7 +254,6 @@ export const OurWorksCarouselSection: React.FC<OurWorksCarouselSectionProps> = (
                       onError={(e) => handleImageErrorFallback(e, currentWork.fallbackPng)}
                     />
                   </picture>
-
                 )}
 
                 {/* Subtle vignette gradient */}
@@ -456,12 +455,7 @@ export const OurWorksCarouselSection: React.FC<OurWorksCarouselSectionProps> = (
                   src={customPhotos[lightboxWork.id] || lightboxWork.fallbackPng}
                   alt={lightboxWork.title}
                   className="w-full h-full object-contain select-none"
-                  onError={(e) => {
-                    const target = e.currentTarget;
-                    if (target.src !== lightboxWork.fallbackPng) {
-                      target.src = lightboxWork.fallbackPng;
-                    }
-                  }}
+                  onError={(e) => handleImageErrorFallback(e, lightboxWork.fallbackPng)}
                 />
               </picture>
             </div>
