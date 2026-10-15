@@ -17,6 +17,7 @@ import {
 import { BRAND_INFO } from '../data/eventData';
 import { PermanentPhotoSlot } from './PermanentPhotoSlot';
 import { MandalaMotif } from './MandalaMotif';
+import { getAssetUrl, handleImageErrorFallback } from '../utils/assetHelper';
 
 interface CertifiedProfessionalSectionProps {
   onPlanEvent: () => void;
@@ -318,11 +319,12 @@ export const CertifiedProfessionalSection: React.FC<CertifiedProfessionalSection
 
             <div className="relative aspect-[16/10] sm:aspect-[16/9] w-full bg-black flex items-center justify-center overflow-hidden">
               <picture className="w-full h-full block">
-                <source srcSet="/images/certified-award-balamurugan.webp" type="image/webp" />
+                <source srcSet={getAssetUrl('images/certified-award-balamurugan.webp')} type="image/webp" />
                 <img
-                  src="/images/certified-award-balamurugan.png"
+                  src={getAssetUrl('images/certified-award-balamurugan.png')}
                   alt="Certified Event Management Professional Award - J. Balamurugan"
                   className="w-full h-full object-contain"
+                  onError={(e) => handleImageErrorFallback(e, 'images/certified-award-balamurugan.png')}
                 />
               </picture>
             </div>

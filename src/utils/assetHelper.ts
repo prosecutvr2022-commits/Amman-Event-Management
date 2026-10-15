@@ -33,6 +33,7 @@ export function getAssetUrl(path: string): string {
 /**
  * Handles image error events by seamlessly falling back to an alternate format (e.g. PNG if WebP fails)
  * or a placeholder, preventing infinite fallback loops.
+ * Also clears sibling <source> elements in a <picture> container to allow the <img> fallback to display.
  *
  * @param event The SyntheticEvent from the img onError handler
  * @param fallbackPath The fallback image path or URL
@@ -44,18 +45,30 @@ export function handleImageErrorFallback(
   const target = (event.currentTarget || event.target) as HTMLImageElement | null;
   if (!target) return;
 
+  // Clear sibling <source> elements in <picture> so the browser respects the <img> src
+  if (target.parentElement && target.parentElement.tagName.toLowerCase() === 'picture') {
+    const sources = target.parentElement.querySelectorAll('source');
+    sources.forEach((source) => {
+      source.removeAttribute('srcset');
+    });
+  }
+
+  // If fallbackPath provided, try it first
   if (fallbackPath) {
     const resolvedFallback = getAssetUrl(fallbackPath);
-    // Avoid infinite error loop if fallback itself fails
-    if (target.src !== resolvedFallback && !target.dataset.fallbackTried) {
+    if (target.src !== resolvedFallback && target.dataset.fallbackTried !== 'true') {
       target.dataset.fallbackTried = 'true';
       target.src = resolvedFallback;
       return;
     }
   }
 
-  // If no fallback or fallback also failed, ensure broken image styling is graceful
-  target.style.display = target.dataset.fallbackTried ? 'none' : target.style.display;
+  // Automatic extension fallback (.webp -> .png)
+  if (target.src && target.src.includes('.webp') && target.dataset.webpFallbackTried !== 'true') {
+    target.dataset.webpFallbackTried = 'true';
+    target.src = target.src.replace(/\.webp(\?.*)?$/, '.png$1');
+    return;
+  }
 }
 
 export default {

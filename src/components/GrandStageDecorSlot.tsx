@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Upload, RotateCcw, Check, Sparkles, Loader2, Maximize2 } from 'lucide-react';
 import { optimizeImage } from '../utils/imageOptimizer';
+import { getAssetUrl, handleImageErrorFallback } from '../utils/assetHelper';
 
 interface GrandStageDecorSlotProps {
   id: 'grand-stage-teal-halo' | 'grand-stage-aandal-mandap';
@@ -200,18 +201,17 @@ export const GrandStageDecorSlot: React.FC<GrandStageDecorSlotProps> = ({
         ) : !imageError ? (
           <picture className="w-full h-full block">
             <source
-              srcSet={`/images/${cleanId}.webp?v=${versionTimestamp}`}
+              srcSet={getAssetUrl(`images/${cleanId}.webp`)}
               type="image/webp"
             />
             <img
-              src={`/images/${cleanId}.png?v=${versionTimestamp}`}
+              src={getAssetUrl(`images/${cleanId}.png`)}
               alt={title}
               className="w-full h-full object-cover object-center select-none transition-transform duration-500 group-hover:scale-105 block"
               loading="lazy"
               decoding="async"
-              onError={() => {
-                console.warn(`[GrandStageDecorSlot] Image load error for /images/${cleanId}.png`);
-                setImageError(true);
+              onError={(e) => {
+                handleImageErrorFallback(e, `images/${cleanId}.png`);
               }}
             />
           </picture>
