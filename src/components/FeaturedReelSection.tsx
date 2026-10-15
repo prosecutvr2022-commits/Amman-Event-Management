@@ -1,21 +1,38 @@
-import React, { useState, useRef } from 'react';
-import { Play, Pause, Volume2, VolumeX, Maximize2, ExternalLink, Sparkles, Heart, Eye, MessageCircle, Share2, Instagram, ShieldCheck } from 'lucide-react';
-import { BRAND_INFO } from '../data/eventData';
-import { MandalaMotif } from './MandalaMotif';
+import React, { useState, useRef } from "react";
+import {
+  Play,
+  Pause,
+  Volume2,
+  VolumeX,
+  Maximize2,
+  ExternalLink,
+  Sparkles,
+  Heart,
+  Eye,
+  MessageCircle,
+  Share2,
+  Instagram,
+  ShieldCheck,
+} from "lucide-react";
+import { BRAND_INFO } from "../data/eventData";
+import { MandalaMotif } from "./MandalaMotif";
 
 interface FeaturedReelSectionProps {
   onPlanEvent: () => void;
 }
 
-export const FeaturedReelSection: React.FC<FeaturedReelSectionProps> = ({ onPlanEvent }) => {
+export const FeaturedReelSection: React.FC<FeaturedReelSectionProps> = ({
+  onPlanEvent,
+}) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const [activeTab, setActiveTab] = useState<'player' | 'embed'>('player');
+  const [activeTab, setActiveTab] = useState<"player" | "embed">("player");
   const [hasInteracted, setHasInteracted] = useState(false);
 
-  const instagramUrl = 'https://www.instagram.com/reel/DdnLeYTTu1V/?stkn=cWpwb2c3OXl1MWhp';
-  const instagramEmbedUrl = 'https://www.instagram.com/reel/DdnLeYTTu1V/embed';
+  const instagramUrl =
+    "https://www.instagram.com/reel/DdnLeYTTu1V/?stkn=cWpwb2c3OXl1MWhp";
+  const instagramEmbedUrl = "https://www.instagram.com/reel/DdnLeYTTu1V/embed";
 
   const togglePlay = () => {
     if (!videoRef.current) return;
@@ -46,7 +63,10 @@ export const FeaturedReelSection: React.FC<FeaturedReelSectionProps> = ({ onPlan
   };
 
   return (
-    <section id="featured-video" className="relative py-20 lg:py-28 bg-[#060B18] overflow-hidden border-b border-[#DFB76C]/20">
+    <section
+      id="featured-video"
+      className="relative py-20 lg:py-28 bg-[#060B18] overflow-hidden border-b border-[#DFB76C]/20"
+    >
       {/* Subtle Background Glow & Traditional Mandala */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle_at_center,rgba(223,183,108,0.1),transparent_70%)] pointer-events-none blur-3xl z-0" />
       <div className="absolute top-10 right-10 hidden lg:block opacity-20 pointer-events-none">
@@ -75,36 +95,41 @@ export const FeaturedReelSection: React.FC<FeaturedReelSectionProps> = ({ onPlan
             &ldquo;மாப்பிள்ளை பொண்ணோட டான்ஸ் ✨&rdquo;
           </p>
           <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-            Experience the vibrant celebration, romantic couple entry dance, and joyous atmosphere planned and orchestrated by{' '}
-            <strong className="text-white font-semibold">{BRAND_INFO.businessName}</strong> — an officially certified,{' '}
-            <strong className="text-[#F5D77F]">Government Registered Event Management Enterprise</strong>.
+            Experience the vibrant celebration, romantic couple entry dance, and
+            joyous atmosphere planned and orchestrated by{" "}
+            <strong className="text-white font-semibold">
+              {BRAND_INFO.businessName}
+            </strong>{" "}
+            — an officially certified,{" "}
+            <strong className="text-[#F5D77F]">
+              Government Registered Event Management Enterprise
+            </strong>
+            .
           </p>
         </div>
 
         {/* Main 2-Column Showcase */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          
           {/* Left Column: Vertical 9:16 Video Player / Reel Card */}
           <div className="lg:col-span-6 flex flex-col items-center justify-center">
-            
             {/* View Mode Switcher */}
             <div className="flex items-center gap-2 p-1.5 mb-4 rounded-xl bg-[#091024] border border-[#DFB76C]/30 shadow-md">
               <button
-                onClick={() => setActiveTab('player')}
+                onClick={() => setActiveTab("player")}
                 className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                  activeTab === 'player'
-                    ? 'bg-gold-gradient text-[#070D1E] shadow'
-                    : 'text-slate-300 hover:text-white'
+                  activeTab === "player"
+                    ? "bg-gold-gradient text-[#070D1E] shadow"
+                    : "text-slate-300 hover:text-white"
                 }`}
               >
                 HD Video Player
               </button>
               <button
-                onClick={() => setActiveTab('embed')}
+                onClick={() => setActiveTab("embed")}
                 className={`px-4 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${
-                  activeTab === 'embed'
-                    ? 'bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] text-white shadow'
-                    : 'text-slate-300 hover:text-white'
+                  activeTab === "embed"
+                    ? "bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] text-white shadow"
+                    : "text-slate-300 hover:text-white"
                 }`}
               >
                 <Instagram className="w-3.5 h-3.5" />
@@ -114,8 +139,7 @@ export const FeaturedReelSection: React.FC<FeaturedReelSectionProps> = ({ onPlan
 
             {/* Reel Container Card (Simulated Smartphone Frame with Gold Border) */}
             <div className="relative w-full max-w-[340px] sm:max-w-[360px] aspect-[9/16] rounded-3xl overflow-hidden bg-black shadow-[0_20px_50px_rgba(0,0,0,0.8)] border-2 border-[#DFB76C]/60 group">
-              
-              {activeTab === 'player' ? (
+              {activeTab === "player" ? (
                 <>
                   {/* HTML5 Native Stream Video */}
                   <video
@@ -153,8 +177,12 @@ export const FeaturedReelSection: React.FC<FeaturedReelSectionProps> = ({ onPlan
                         <Instagram className="w-3.5 h-3.5" />
                       </div>
                       <div className="text-left">
-                        <p className="text-[11px] font-bold text-white leading-tight">sara_vlog_tn50</p>
-                        <p className="text-[9px] text-[#DFB76C] leading-tight">Amman Event</p>
+                        <p className="text-[11px] font-bold text-white leading-tight">
+                          sara_vlog_tn50
+                        </p>
+                        <p className="text-[9px] text-[#DFB76C] leading-tight">
+                          Amman Event
+                        </p>
                       </div>
                     </div>
 
@@ -175,17 +203,25 @@ export const FeaturedReelSection: React.FC<FeaturedReelSectionProps> = ({ onPlan
                       <button
                         onClick={togglePlay}
                         className="text-white hover:text-[#DFB76C] transition-colors cursor-pointer"
-                        title={isPlaying ? 'Pause' : 'Play'}
+                        title={isPlaying ? "Pause" : "Play"}
                       >
-                        {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-white" />}
+                        {isPlaying ? (
+                          <Pause className="w-4 h-4" />
+                        ) : (
+                          <Play className="w-4 h-4 fill-white" />
+                        )}
                       </button>
 
                       <button
                         onClick={toggleMute}
                         className="text-white hover:text-[#DFB76C] transition-colors cursor-pointer"
-                        title={isMuted ? 'Unmute' : 'Mute'}
+                        title={isMuted ? "Unmute" : "Mute"}
                       >
-                        {isMuted ? <VolumeX className="w-4 h-4 text-rose-400" /> : <Volume2 className="w-4 h-4 text-emerald-400" />}
+                        {isMuted ? (
+                          <VolumeX className="w-4 h-4 text-rose-400" />
+                        ) : (
+                          <Volume2 className="w-4 h-4 text-emerald-400" />
+                        )}
                       </button>
                     </div>
 
@@ -238,31 +274,55 @@ export const FeaturedReelSection: React.FC<FeaturedReelSectionProps> = ({ onPlan
                 Groom & Bride Special Stage Dance
               </h3>
               <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-                A magical wedding reception memory coordinated by <strong className="text-[#F5D77F]">J. Balamurugan</strong> in Thiruvarur. 
-                Our team orchestrates every element to perfection: from stage backdrop lighting, synchronized cold pyros, smoke effects, and acoustic sound systems to choreographing memorable couple entries.
+                A magical wedding reception memory coordinated by{" "}
+                <strong className="text-[#F5D77F]">J. Balamurugan</strong> in
+                Thiruvarur. Our team orchestrates every element to perfection:
+                from stage backdrop lighting, synchronized cold pyros, smoke
+                effects, and acoustic sound systems to choreographing memorable
+                couple entries.
               </p>
             </div>
 
             {/* Highlight Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
               <div className="p-3.5 rounded-xl bg-[#0B152B] border border-[#DFB76C]/25 backdrop-blur-sm">
-                <p className="text-xs font-bold text-[#F5D77F] uppercase tracking-wider mb-1">Couple Grand Entry</p>
-                <p className="text-xs text-slate-300">Custom bridal flower canopy, cold pyro sparklers, and synchronized music.</p>
+                <p className="text-xs font-bold text-[#F5D77F] uppercase tracking-wider mb-1">
+                  Couple Grand Entry
+                </p>
+                <p className="text-xs text-slate-300">
+                  Custom bridal flower canopy, cold pyro sparklers, and
+                  synchronized music.
+                </p>
               </div>
 
               <div className="p-3.5 rounded-xl bg-[#0B152B] border border-[#DFB76C]/25 backdrop-blur-sm">
-                <p className="text-xs font-bold text-[#F5D77F] uppercase tracking-wider mb-1">Stage & Lighting</p>
-                <p className="text-xs text-slate-300">Cinematic stage design with ambient dynamic LED floodlighting and DJ setup.</p>
+                <p className="text-xs font-bold text-[#F5D77F] uppercase tracking-wider mb-1">
+                  Stage & Lighting
+                </p>
+                <p className="text-xs text-slate-300">
+                  Cinematic stage design with ambient dynamic LED floodlighting
+                  and DJ setup.
+                </p>
               </div>
 
               <div className="p-3.5 rounded-xl bg-[#0B152B] border border-[#DFB76C]/25 backdrop-blur-sm">
-                <p className="text-xs font-bold text-[#F5D77F] uppercase tracking-wider mb-1">Live Coordination</p>
-                <p className="text-xs text-slate-300">Dedicated floor management so the couple and family enjoy stress-free moments.</p>
+                <p className="text-xs font-bold text-[#F5D77F] uppercase tracking-wider mb-1">
+                  Live Coordination
+                </p>
+                <p className="text-xs text-slate-300">
+                  Dedicated floor management so the couple and family enjoy
+                  stress-free moments.
+                </p>
               </div>
 
               <div className="p-3.5 rounded-xl bg-[#0B152B] border border-[#DFB76C]/25 backdrop-blur-sm">
-                <p className="text-xs font-bold text-[#F5D77F] uppercase tracking-wider mb-1">Memories Captured</p>
-                <p className="text-xs text-slate-300">High-definition photography and viral reels tailored for your social media.</p>
+                <p className="text-xs font-bold text-[#F5D77F] uppercase tracking-wider mb-1">
+                  Memories Captured
+                </p>
+                <p className="text-xs text-slate-300">
+                  High-definition photography and viral reels tailored for your
+                  social media.
+                </p>
               </div>
             </div>
 
@@ -298,7 +358,6 @@ export const FeaturedReelSection: React.FC<FeaturedReelSectionProps> = ({ onPlan
               </a>
             </div>
           </div>
-
         </div>
       </div>
     </section>
