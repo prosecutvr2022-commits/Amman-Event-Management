@@ -78,13 +78,12 @@ export const WeddingShowcase: React.FC<WeddingShowcaseProps> = ({ onPlanWedding 
                 description="Bespoke reception stage featuring radiant warm backlit lotus petals, peacock teal drapery, suspended white wisteria canopy, floral monogram crest (JP), and fluted camel shell sofa."
                 onOpenLightbox={() =>
                   setSelectedPhoto({
-                    src: '/images/grand-stage-teal-halo.webp',
+                    src: getAssetUrl('images/grand-stage-teal-halo.webp'),
                     title: 'Luminous Teal Lotus Halo & Ginkgo Canopy Stage',
                     desc: 'Bespoke reception stage featuring radiant warm backlit lotus petals, peacock teal drapery, suspended white wisteria canopy, floral monogram crest (JP), and fluted camel shell sofa.',
                   })
                 }
               />
-
               {/* Photo 2: Sri Andal & Ranganathar Sacred Temple Mandapam */}
               <GrandStageDecorSlot
                 id="grand-stage-aandal-mandap"
@@ -94,7 +93,7 @@ export const WeddingShowcase: React.FC<WeddingShowcaseProps> = ({ onPlanWedding 
                 description="Grand South Indian Muhurtham mandapam with carved golden Dravidian temple pillars, dual deity sanctum shrines, dense pink and red rose floral wall, and royal silver chaise throne."
                 onOpenLightbox={() =>
                   setSelectedPhoto({
-                    src: '/images/grand-stage-aandal-mandap.webp',
+                    src: getAssetUrl('images/grand-stage-aandal-mandap.webp'),
                     title: 'Sri Andal & Ranganathar Sacred Temple Mandapam',
                     desc: 'Grand South Indian Muhurtham mandapam with carved golden Dravidian temple pillars, dual deity sanctum shrines, dense pink and red rose floral wall, and royal silver chaise throne.',
                   })

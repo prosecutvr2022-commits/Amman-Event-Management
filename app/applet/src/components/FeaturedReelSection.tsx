@@ -1,4 +1,22 @@
-import React, { useState, useRef } from 'react';import { Play, Pause, Volume2, VolumeX, Maximize2, ExternalLink, Sparkles, Heart, Eye, MessageCircle, Share2, Instagram, ShieldCheck } from 'lucide-react';import { BRAND_INFO } from '../data/eventData';import { MandalaMotif } from './MandalaMotif';import { getAssetUrl } from '../utils/assetHelper';
+import React, { useState, useRef } from 'react';
+import {
+  Play,
+  Pause,
+  Volume2,
+  VolumeX,
+  Maximize2,
+  ExternalLink,
+  Sparkles,
+  Heart,
+  Eye,
+  MessageCircle,
+  Share2,
+  Instagram,
+  ShieldCheck,
+} from 'lucide-react';
+import { BRAND_INFO } from '@/src/data/eventData';
+import { MandalaMotif } from '@/src/components/MandalaMotif';
+import { getAssetUrl } from '@/src/utils/assetHelper';
 
 interface FeaturedReelSectionProps {
   onPlanEvent: () => void;
@@ -21,18 +39,18 @@ export const FeaturedReelSection: React.FC<FeaturedReelSectionProps> = ({ onPlan
       videoRef.current.pause();
       setIsPlaying(false);
     } else {
-      videoRef.current.play().then(() => {
-        setIsPlaying(true);
-      }).catch((err) => {
-        console.warn('Video play blocked or error:', err);
-      });
+      videoRef.current
+        .play()
+        .then(() => setIsPlaying(true))
+        .catch(() => {});
     }
   };
 
   const toggleMute = () => {
     if (!videoRef.current) return;
-    videoRef.current.muted = !isMuted;
-    setIsMuted(!isMuted);
+    const nextMuted = !isMuted;
+    videoRef.current.muted = nextMuted;
+    setIsMuted(nextMuted);
   };
 
   const handleFullscreen = () => {
@@ -43,51 +61,61 @@ export const FeaturedReelSection: React.FC<FeaturedReelSectionProps> = ({ onPlan
   };
 
   return (
-    <section className="py-24 bg-slate-950 relative overflow-hidden text-white">
-      {/* Decorative Background Elements */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-full opacity-10 pointer-events-none">
-        <div className="absolute top-10 left-10 w-96 h-96 rounded-full bg-[#DFB76C] blur-[120px]" />
-        <div className="absolute bottom-10 right-10 w-96 h-96 rounded-full bg-blue-600 blur-[120px]" />
+    <section id="featured-video" className="relative py-20 lg:py-28 bg-[#060B18] overflow-hidden border-b border-[#DFB76C]/20">
+      {/* Subtle Background Glow & Traditional Mandala */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle_at_center,rgba(223,183,108,0.1),transparent_70%)] pointer-events-none blur-3xl z-0" />
+      <div className="absolute top-10 right-10 hidden lg:block opacity-20 pointer-events-none">
+        <MandalaMotif size={280} opacity={0.4} variant="full" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#DFB76C]/10 border border-[#DFB76C]/30 text-[#F5D77F] text-xs font-mono uppercase tracking-widest mb-4">
-            <Sparkles className="w-3.5 h-3.5 text-[#DFB76C]" />
-            <span>Featured Viral Reel</span>
+        <div className="text-center max-w-3xl mx-auto mb-14">
+          {/* Government Registered Company & Certified Professional Pill */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 via-[#DFB76C]/30 to-amber-500/20 border-2 border-[#DFB76C] text-[#F5D77F] text-xs sm:text-sm font-extrabold uppercase tracking-wider mb-4 shadow-[0_0_20px_rgba(223,183,108,0.25)]">
+            <ShieldCheck className="w-4 h-4 text-[#DFB76C]" />
+            <span>Government Registered Company • Certified Professional</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white tracking-tight">
-            See Our Work In <span className="text-transparent bg-clip-text bg-gold-gradient">Motion</span>
+          <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-[#0B152B] border border-[#DFB76C]/40 text-[#DFB76C] text-[11px] font-semibold uppercase tracking-widest mb-4 shadow-lg">
+            <Sparkles className="w-3.5 h-3.5 text-[#DFB76C]" />
+            <span>Featured Event Highlight</span>
+            <Sparkles className="w-3.5 h-3.5 text-[#DFB76C]" />
+          </div>
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-3 tracking-tight">
+            Viral Celebration Moment
           </h2>
-          <p className="mt-4 text-slate-300 text-sm sm:text-base leading-relaxed">
-            Experience the grand ambiance, royal bride and groom entries, and meticulous stage lighting crafted by J. Balamurugan and team.
+          <p className="font-serif italic text-lg sm:text-xl text-[#DFB76C] mb-3">
+            &ldquo;மாப்பிள்ளை பொண்ணோட டான்ஸ் ✨&rdquo;
+          </p>
+          <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+            Experience the vibrant celebration, romantic couple entry dance, and joyous atmosphere planned and orchestrated by{' '}
+            <strong className="text-white font-semibold">{BRAND_INFO.businessName}</strong> — an officially certified,{' '}
+            <strong className="text-[#F5D77F]">Government Registered Event Management Enterprise</strong>.
           </p>
         </div>
 
-        {/* Main Grid Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Left Column: Phone Frame Video Player */}
-          <div className="lg:col-span-6 flex flex-col items-center">
-            {/* Tab Switcher */}
-            <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-slate-900 border border-slate-800 mb-6 shadow-lg">
+        {/* Main 2-Column Showcase */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          {/* Left Column: Vertical 9:16 Video Player / Reel Card */}
+          <div className="lg:col-span-6 flex flex-col items-center justify-center">
+            {/* View Mode Switcher */}
+            <div className="flex items-center gap-2 p-1.5 mb-4 rounded-xl bg-[#091024] border border-[#DFB76C]/30 shadow-md">
               <button
                 onClick={() => setActiveTab('player')}
-                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2 ${
+                className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                   activeTab === 'player'
-                    ? 'bg-gold-gradient text-[#070D1E] shadow-md'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-gold-gradient text-[#070D1E] shadow'
+                    : 'text-slate-300 hover:text-white'
                 }`}
               >
-                <Play className="w-3.5 h-3.5" />
-                <span>HD Video Stream</span>
+                HD Video Player
               </button>
               <button
                 onClick={() => setActiveTab('embed')}
-                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2 ${
+                className={`px-4 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${
                   activeTab === 'embed'
-                    ? 'bg-gold-gradient text-[#070D1E] shadow-md'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] text-white shadow'
+                    : 'text-slate-300 hover:text-white'
                 }`}
               >
                 <Instagram className="w-3.5 h-3.5" />
@@ -127,7 +155,7 @@ export const FeaturedReelSection: React.FC<FeaturedReelSectionProps> = ({ onPlan
                     </div>
                   )}
 
-                  {/* Top Creator Badge */}
+                  {/* Top Creator Info Badge */}
                   <div className="absolute top-4 left-4 right-4 z-30 flex items-center justify-between pointer-events-none">
                     <div className="flex items-center gap-2 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
                       <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-[#f09433] to-[#bc1888] flex items-center justify-center text-white text-[10px] font-bold">
@@ -216,7 +244,7 @@ export const FeaturedReelSection: React.FC<FeaturedReelSectionProps> = ({ onPlan
                 Groom & Bride Special Stage Dance
               </h3>
               <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-                A magical wedding reception memory coordinated by <strong className="text-[#F5D77F]">J. Balamurugan</strong> in Thiruvarur. 
+                A magical wedding reception memory coordinated by <strong className="text-[#F5D77F]">J. Balamurugan</strong> in Thiruvarur.{' '}
                 Our team orchestrates every element to perfection: from stage backdrop lighting, synchronized cold pyros, smoke effects, and acoustic sound systems to choreographing memorable couple entries.
               </p>
             </div>
