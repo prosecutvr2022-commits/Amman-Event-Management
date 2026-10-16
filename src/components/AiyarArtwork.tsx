@@ -12,40 +12,21 @@ export const AiyarArtwork: React.FC<AiyarArtworkProps> = ({
   className = '',
   title,
 }) => {
-  const [customImage, setCustomImage] = useState<string | null>(() => {
-    try {
-      return localStorage.getItem(STORAGE_KEY);
-    } catch {
-      return null;
-    }
-  });
-
   return (
     <div
       className={`relative w-full h-full overflow-hidden ${className}`}
       title={title || 'Aiyar (Vedic Vadhyar & Sacred Homam Rituals) - Amman Event Management'}
     >
-      {customImage ? (
+      <picture className="w-full h-full block">
+        <source srcSet={getAssetUrl('images/aiyar.webp')} type="image/webp" />
         <img
-          src={customImage}
+          src={getAssetUrl('images/aiyar.png')}
           alt={title || 'Aiyar Vedic Priest Sacred Homam Ceremony'}
           className="w-full h-full object-cover object-center select-none transition-transform duration-500 group-hover:scale-105 block"
-          loading="eager"
+          loading="lazy"
           decoding="async"
-          onError={() => setCustomImage(null)}
         />
-      ) : (
-        <picture className="w-full h-full block">
-          <source srcSet={getAssetUrl('images/aiyar.webp')} type="image/webp" />
-          <img
-            src={getAssetUrl('images/aiyar.png')}
-            alt={title || 'Aiyar Vedic Priest Sacred Homam Ceremony'}
-            className="w-full h-full object-cover object-center select-none transition-transform duration-500 group-hover:scale-105 block"
-            loading="lazy"
-            decoding="async"
-          />
-        </picture>
-      )}
+      </picture>
     </div>
   );
 };

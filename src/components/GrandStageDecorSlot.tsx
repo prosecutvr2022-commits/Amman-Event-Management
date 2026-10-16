@@ -26,13 +26,7 @@ export const GrandStageDecorSlot: React.FC<GrandStageDecorSlotProps> = ({
   const storageKey = `amman_${cleanId}_img`;
   const syncEvent = `amman_${cleanId}_updated`;
 
-  const [customImage, setCustomImage] = useState<string | null>(() => {
-    try {
-      return localStorage.getItem(storageKey);
-    } catch {
-      return null;
-    }
-  });
+  const [customImage, setCustomImage] = useState<string | null>(null);
 
   const [feedback, setFeedback] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
@@ -42,20 +36,7 @@ export const GrandStageDecorSlot: React.FC<GrandStageDecorSlotProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const handleSync = () => {
-      try {
-        const saved = localStorage.getItem(storageKey);
-        if (saved) {
-          setCustomImage(saved);
-        }
-      } catch {
-        // ignore
-      }
-      setVersionTimestamp(Date.now());
-    };
-
-    window.addEventListener(syncEvent, handleSync);
-    return () => window.removeEventListener(syncEvent, handleSync);
+    // No-op sync
   }, [storageKey, syncEvent]);
 
   const saveFilePermanently = async (file: File) => {

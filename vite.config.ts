@@ -82,15 +82,34 @@ export default defineConfig(() => {
                 const webpTarget = path.join(destDir, `${cleanId}.webp`);
                 try {
                   const isWork = cleanId.startsWith('work-');
+                  const isAward = cleanId.includes('award') || cleanId.includes('certified');
                   const tmpWebp = path.join(destDir, `${cleanId}_tmp.webp`);
-                  await sharp(targetFile)
-                    .resize(isWork ? 1000 : 1200, isWork ? 1000 : 675, { fit: isWork ? 'contain' : 'cover', position: 'center' })
-                    .webp({ quality: 82 })
-                    .toFile(tmpWebp);
+                  let pipeline = sharp(targetFile);
+                  if (isWork) {
+                    pipeline = pipeline.resize(1000, 1000, { fit: 'contain', position: 'center' });
+                  } else if (isAward) {
+                    pipeline = pipeline.resize(800, 900, { fit: 'inside', withoutEnlargement: true });
+                  } else {
+                    pipeline = pipeline.resize(1200, 675, { fit: 'cover', position: 'center' });
+                  }
+                  await pipeline.webp({ quality: 90 }).toFile(tmpWebp);
                   fs.copyFileSync(tmpWebp, webpTarget);
                   fs.unlinkSync(tmpWebp);
                 } catch (e) {
                   console.error('Failed to convert to webp:', e);
+                }
+
+                if (cleanId === 'certified-award-balamurugan' || cleanId === 'award-balamurugan') {
+                  try {
+                    fs.copyFileSync(targetFile, path.join(imagesDir, 'certified-award-balamurugan.png'));
+                    fs.copyFileSync(targetFile, path.join(imagesDir, 'award-balamurugan.png'));
+                    if (fs.existsSync(webpTarget)) {
+                      fs.copyFileSync(webpTarget, path.join(imagesDir, 'certified-award-balamurugan.webp'));
+                      fs.copyFileSync(webpTarget, path.join(imagesDir, 'award-balamurugan.webp'));
+                    }
+                  } catch (e) {
+                    console.error('Failed to copy award aliases:', e);
+                  }
                 }
 
                 if (cleanId === 'wedding' || cleanId === 'section-image') {

@@ -123,54 +123,15 @@ export const OurWorksCarouselSection: React.FC<OurWorksCarouselSectionProps> = (
   const [lightboxWork, setLightboxWork] = useState<WorkItem | null>(null);
   const [touchStart, setTouchStart] = useState<number | null>(null);
 
-  // Custom photo overrides per work item (supports synchronized photos)
-  const [customPhotos, setCustomPhotos] = useState<Record<string, string>>(() => {
-    const map: Record<string, string> = {};
-    WORKS_DATA.forEach((w) => {
-      try {
-        const saved = localStorage.getItem(`amman_${w.id}_img`);
-        if (saved) map[w.id] = saved;
-      } catch {
-        // ignore
-      }
-    });
-    return map;
-  });
-
+  // Custom photo overrides disabled so static assets match Netlify and Google AI Studio preview
+  const [customPhotos] = useState<Record<string, string>>({});
   const [versionTimestamp, setVersionTimestamp] = useState<number>(() => Date.now());
 
   const totalWorks = WORKS_DATA.length;
   const currentWork = WORKS_DATA[currentIndex];
 
-  // Sync across tabs and other components
   useEffect(() => {
-    const handleSync = () => {
-      const map: Record<string, string> = {};
-      WORKS_DATA.forEach((w) => {
-        try {
-          const saved = localStorage.getItem(`amman_${w.id}_img`);
-          if (saved) map[w.id] = saved;
-        } catch {
-          // ignore
-        }
-      });
-      setCustomPhotos(map);
-      setVersionTimestamp(Date.now());
-    };
-
-    WORKS_DATA.forEach((w) => {
-      window.addEventListener(`amman_${w.id}_updated`, handleSync);
-    });
-    window.addEventListener('amman_works_updated', handleSync);
-    window.addEventListener('storage', handleSync);
-
-    return () => {
-      WORKS_DATA.forEach((w) => {
-        window.removeEventListener(`amman_${w.id}_updated`, handleSync);
-      });
-      window.removeEventListener('amman_works_updated', handleSync);
-      window.removeEventListener('storage', handleSync);
-    };
+    // No-op sync to ensure consistent rendering
   }, []);
 
   const nextSlide = useCallback(() => {

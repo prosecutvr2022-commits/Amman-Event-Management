@@ -35,17 +35,7 @@ export const PermanentPhotoSlot: React.FC<PermanentPhotoSlotProps> = ({
     ? ['amman_g1_updated', 'amman_grand-royal-wedding-reception-mandap_updated']
     : [syncEvent];
 
-  const [customImage, setCustomImage] = useState<string | null>(() => {
-    try {
-      for (const k of aliasKeys) {
-        const val = localStorage.getItem(k);
-        if (val) return val;
-      }
-      return null;
-    } catch {
-      return null;
-    }
-  });
+  const [customImage, setCustomImage] = useState<string | null>(null);
 
   const [feedback, setFeedback] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
@@ -54,27 +44,8 @@ export const PermanentPhotoSlot: React.FC<PermanentPhotoSlotProps> = ({
   const [versionTimestamp, setVersionTimestamp] = useState<number>(() => Date.now());
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Sync across card banner & modal instances
   useEffect(() => {
-    const handleSync = () => {
-      try {
-        for (const k of aliasKeys) {
-          const saved = localStorage.getItem(k);
-          if (saved) {
-            setCustomImage(saved);
-            break;
-          }
-        }
-      } catch {
-        // ignore
-      }
-      setVersionTimestamp(Date.now());
-    };
-
-    aliasEvents.forEach((evt) => window.addEventListener(evt, handleSync));
-    return () => {
-      aliasEvents.forEach((evt) => window.removeEventListener(evt, handleSync));
-    };
+    // No-op sync
   }, [cleanId]);
 
   const saveFilePermanently = async (file: File) => {
@@ -221,7 +192,11 @@ export const PermanentPhotoSlot: React.FC<PermanentPhotoSlotProps> = ({
           <img
             src={`${getAssetUrl(`images/${cleanId}.png`)}?v=${versionTimestamp}`}
             alt={title || defaultLabel}
-            className="w-full h-full object-cover object-center select-none transition-transform duration-500 group-hover:scale-105 block"
+            className={`w-full h-full ${
+              cleanId.includes('award') || cleanId.includes('certified')
+                ? 'object-contain bg-[#070D1E]'
+                : 'object-cover object-center'
+            } select-none transition-transform duration-500 group-hover:scale-105 block`}
             loading="lazy"
             decoding="async"
             onError={(e) => {

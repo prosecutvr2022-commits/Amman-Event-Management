@@ -317,11 +317,11 @@ export const CertifiedProfessionalSection: React.FC<CertifiedProfessionalSection
               </button>
             </div>
 
-            <div className="relative aspect-[16/10] sm:aspect-[16/9] w-full bg-black flex items-center justify-center overflow-hidden">
-              <picture className="w-full h-full block">
-                <source srcSet={getAssetUrl('images/certified-award-balamurugan.webp')} type="image/webp" />
+            <div className="relative aspect-square sm:aspect-[4/3] max-h-[75vh] w-full bg-black flex items-center justify-center overflow-hidden">
+              <picture className="w-full h-full flex items-center justify-center">
+                <source srcSet={`${getAssetUrl('images/certified-award-balamurugan.webp')}?v=${Date.now()}`} type="image/webp" />
                 <img
-                  src={getAssetUrl('images/certified-award-balamurugan.png')}
+                  src={`${getAssetUrl('images/certified-award-balamurugan.png')}?v=${Date.now()}`}
                   alt="Certified Event Management Professional Award - J. Balamurugan"
                   className="w-full h-full object-contain"
                   onError={(e) => handleImageErrorFallback(e, 'images/certified-award-balamurugan.png')}
