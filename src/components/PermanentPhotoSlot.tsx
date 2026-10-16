@@ -22,9 +22,26 @@ export const PermanentPhotoSlot: React.FC<PermanentPhotoSlotProps> = ({
   const storageKey = `amman_${cleanId}_img`;
   const syncEvent = `amman_${cleanId}_updated`;
 
+  // Additional aliases for synchronized wedding / g1 sections
+  const aliasKeys = cleanId === 'wedding' || cleanId === 'section-image'
+    ? ['amman_wedding_img', 'amman_section-image_img']
+    : cleanId === 'g1' || cleanId === 'grand-royal-wedding-reception-mandap'
+    ? ['amman_g1_img', 'amman_grand-royal-wedding-reception-mandap_img']
+    : [storageKey];
+
+  const aliasEvents = cleanId === 'wedding' || cleanId === 'section-image'
+    ? ['amman_wedding_updated', 'amman_section-image_updated']
+    : cleanId === 'g1' || cleanId === 'grand-royal-wedding-reception-mandap'
+    ? ['amman_g1_updated', 'amman_grand-royal-wedding-reception-mandap_updated']
+    : [syncEvent];
+
   const [customImage, setCustomImage] = useState<string | null>(() => {
     try {
-      return localStorage.getItem(storageKey);
+      for (const k of aliasKeys) {
+        const val = localStorage.getItem(k);
+        if (val) return val;
+      }
+      return null;
     } catch {
       return null;
     }
@@ -41,9 +58,12 @@ export const PermanentPhotoSlot: React.FC<PermanentPhotoSlotProps> = ({
   useEffect(() => {
     const handleSync = () => {
       try {
-        const saved = localStorage.getItem(storageKey);
-        if (saved) {
-          setCustomImage(saved);
+        for (const k of aliasKeys) {
+          const saved = localStorage.getItem(k);
+          if (saved) {
+            setCustomImage(saved);
+            break;
+          }
         }
       } catch {
         // ignore
@@ -51,9 +71,11 @@ export const PermanentPhotoSlot: React.FC<PermanentPhotoSlotProps> = ({
       setVersionTimestamp(Date.now());
     };
 
-    window.addEventListener(syncEvent, handleSync);
-    return () => window.removeEventListener(syncEvent, handleSync);
-  }, [storageKey, syncEvent]);
+    aliasEvents.forEach((evt) => window.addEventListener(evt, handleSync));
+    return () => {
+      aliasEvents.forEach((evt) => window.removeEventListener(evt, handleSync));
+    };
+  }, [cleanId]);
 
   const saveFilePermanently = async (file: File) => {
     setIsSaving(true);
@@ -66,9 +88,9 @@ export const PermanentPhotoSlot: React.FC<PermanentPhotoSlotProps> = ({
       // 2. Set zero-latency preview
       setCustomImage(dataUrl);
 
-      // 3. Save to browser storage safely (no QuotaExceededError)
+      // 3. Save to browser storage safely (no QuotaExceededError) across aliases
       try {
-        localStorage.setItem(storageKey, dataUrl);
+        aliasKeys.forEach((k) => localStorage.setItem(k, dataUrl));
       } catch (e) {
         console.warn('Storage quota handled:', e);
       }
@@ -87,7 +109,7 @@ export const PermanentPhotoSlot: React.FC<PermanentPhotoSlotProps> = ({
 
       if (response.ok) {
         setVersionTimestamp(Date.now());
-        window.dispatchEvent(new Event(syncEvent));
+        aliasEvents.forEach((evt) => window.dispatchEvent(new Event(evt)));
         setFeedback(`Saved! (${(optimizedSize / 1024).toFixed(0)}KB) ✓`);
         setTimeout(() => setFeedback(null), 3500);
       } else {
@@ -114,13 +136,13 @@ export const PermanentPhotoSlot: React.FC<PermanentPhotoSlotProps> = ({
     e.stopPropagation();
     e.preventDefault();
     try {
-      localStorage.removeItem(storageKey);
+      aliasKeys.forEach((k) => localStorage.removeItem(k));
     } catch {
       // ignore
     }
     setCustomImage(null);
     setVersionTimestamp(Date.now());
-    window.dispatchEvent(new Event(syncEvent));
+    aliasEvents.forEach((evt) => window.dispatchEvent(new Event(evt)));
     setFeedback('Reverted to Default');
     setTimeout(() => setFeedback(null), 2500);
   };
@@ -193,11 +215,11 @@ export const PermanentPhotoSlot: React.FC<PermanentPhotoSlotProps> = ({
       ) : !imageError ? (
         <picture className="w-full h-full block">
           <source
-            srcSet={getAssetUrl(`images/${cleanId}.webp`)}
+            srcSet={`${getAssetUrl(`images/${cleanId}.webp`)}?v=${versionTimestamp}`}
             type="image/webp"
           />
           <img
-            src={getAssetUrl(`images/${cleanId}.png`)}
+            src={`${getAssetUrl(`images/${cleanId}.png`)}?v=${versionTimestamp}`}
             alt={title || defaultLabel}
             className="w-full h-full object-cover object-center select-none transition-transform duration-500 group-hover:scale-105 block"
             loading="lazy"

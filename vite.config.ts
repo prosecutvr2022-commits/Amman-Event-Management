@@ -79,9 +79,9 @@ export default defineConfig(() => {
               req.pipe(writeStream);
 
               writeStream.on('finish', async () => {
+                const webpTarget = path.join(destDir, `${cleanId}.webp`);
                 try {
                   const isWork = cleanId.startsWith('work-');
-                  const webpTarget = path.join(destDir, `${cleanId}.webp`);
                   const tmpWebp = path.join(destDir, `${cleanId}_tmp.webp`);
                   await sharp(targetFile)
                     .resize(isWork ? 1000 : 1200, isWork ? 1000 : 675, { fit: isWork ? 'contain' : 'cover', position: 'center' })
@@ -96,11 +96,64 @@ export default defineConfig(() => {
                 if (cleanId === 'wedding' || cleanId === 'section-image') {
                   try {
                     fs.copyFileSync(targetFile, path.join(imagesDir, 'section-image.png'));
+                    fs.copyFileSync(targetFile, path.join(imagesDir, 'wedding.png'));
                     fs.copyFileSync(targetFile, path.join(publicDir, 'web_wedding_img_1.png'));
                     fs.copyFileSync(targetFile, path.join(publicDir, 'web wedding img 1.png'));
+                    if (fs.existsSync(webpTarget)) {
+                      fs.copyFileSync(webpTarget, path.join(imagesDir, 'section-image.webp'));
+                      fs.copyFileSync(webpTarget, path.join(imagesDir, 'wedding.webp'));
+                    }
                   } catch (e) {
                     console.error('Failed to copy wedding aliases:', e);
                   }
+                }
+
+                if (cleanId === 'g1' || cleanId === 'grand-royal-wedding-reception-mandap') {
+                  try {
+                    fs.copyFileSync(targetFile, path.join(imagesDir, 'g1.png'));
+                    if (fs.existsSync(webpTarget)) {
+                      fs.copyFileSync(webpTarget, path.join(imagesDir, 'g1.webp'));
+                    }
+                  } catch (e) {
+                    console.error('Failed to copy g1 aliases:', e);
+                  }
+                }
+
+                // If production dist exists, keep it synchronized immediately
+                try {
+                  const distDir = path.resolve(__dirname, 'dist');
+                  if (fs.existsSync(distDir)) {
+                    const distImages = path.join(distDir, 'images');
+                    if (fs.existsSync(distImages)) {
+                      let distDest = distImages;
+                      if (cleanId.startsWith('work-')) {
+                        distDest = path.join(distImages, 'works');
+                        if (!fs.existsSync(distDest)) {
+                          fs.mkdirSync(distDest, { recursive: true });
+                        }
+                      }
+                      fs.copyFileSync(targetFile, path.join(distDest, `${cleanId}.png`));
+                      if (fs.existsSync(webpTarget)) {
+                        fs.copyFileSync(webpTarget, path.join(distDest, `${cleanId}.webp`));
+                      }
+                      if (cleanId === 'wedding' || cleanId === 'section-image') {
+                        fs.copyFileSync(targetFile, path.join(distImages, 'section-image.png'));
+                        fs.copyFileSync(targetFile, path.join(distImages, 'wedding.png'));
+                        if (fs.existsSync(webpTarget)) {
+                          fs.copyFileSync(webpTarget, path.join(distImages, 'section-image.webp'));
+                          fs.copyFileSync(webpTarget, path.join(distImages, 'wedding.webp'));
+                        }
+                      }
+                      if (cleanId === 'g1' || cleanId === 'grand-royal-wedding-reception-mandap') {
+                        fs.copyFileSync(targetFile, path.join(distImages, 'g1.png'));
+                        if (fs.existsSync(webpTarget)) {
+                          fs.copyFileSync(webpTarget, path.join(distImages, 'g1.webp'));
+                        }
+                      }
+                    }
+                  }
+                } catch (e) {
+                  console.warn('Failed to sync to dist:', e);
                 }
 
                 res.statusCode = 200;

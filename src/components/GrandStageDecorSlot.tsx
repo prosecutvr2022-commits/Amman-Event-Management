@@ -201,11 +201,11 @@ export const GrandStageDecorSlot: React.FC<GrandStageDecorSlotProps> = ({
         ) : !imageError ? (
           <picture className="w-full h-full block">
             <source
-              srcSet={getAssetUrl(`images/${cleanId}.webp`)}
+              srcSet={`${getAssetUrl(`images/${cleanId}.webp`)}?v=${versionTimestamp}`}
               type="image/webp"
             />
             <img
-              src={getAssetUrl(`images/${cleanId}.png`)}
+              src={`${getAssetUrl(`images/${cleanId}.png`)}?v=${versionTimestamp}`}
               alt={title}
               className="w-full h-full object-cover object-center select-none transition-transform duration-500 group-hover:scale-105 block"
               loading="lazy"
@@ -220,7 +220,7 @@ export const GrandStageDecorSlot: React.FC<GrandStageDecorSlotProps> = ({
             <Sparkles className="w-8 h-8 text-[#DFB76C] mb-2 opacity-80" />
             <p className="text-white font-serif font-bold text-sm mb-1">{title}</p>
             <p className="text-xs text-[#DFB76C]/90">
-              {allowUpload ? 'Click "Set Stage PNG Photo" below to upload' : 'Amman Event Management'}
+              {allowUpload ? 'Click "Set Photo Permanently" below to upload' : 'Amman Event Management'}
             </p>
           </div>
         )}
@@ -231,7 +231,7 @@ export const GrandStageDecorSlot: React.FC<GrandStageDecorSlotProps> = ({
         {allowUpload && isDragging && (
           <div className="absolute inset-0 z-40 bg-black/85 backdrop-blur-sm flex flex-col items-center justify-center p-4 text-center pointer-events-none animate-in fade-in">
             <Upload className="w-8 h-8 text-[#DFB76C] mb-2 animate-bounce" />
-            <p className="text-white font-serif font-bold text-sm">Drop your PNG photo here</p>
+            <p className="text-white font-serif font-bold text-sm">Drop your photo here</p>
             <p className="text-[#DFB76C] text-xs mt-1">To permanently set as {title}</p>
           </div>
         )}
@@ -256,7 +256,7 @@ export const GrandStageDecorSlot: React.FC<GrandStageDecorSlotProps> = ({
           <Maximize2 className="w-3.5 h-3.5 text-[#DFB76C]" />
         </button>
 
-        {/* Controls Overlay Bottom-Right: Set PNG Photo Permanently button */}
+        {/* Controls Overlay Bottom-Right: Set Photo Permanently button */}
         {allowUpload && (
           <div className="absolute bottom-2.5 right-2.5 z-20 flex items-center gap-1.5 flex-wrap justify-end">
             {feedback && (
@@ -287,14 +287,14 @@ export const GrandStageDecorSlot: React.FC<GrandStageDecorSlotProps> = ({
               onClick={triggerUpload}
               disabled={isSaving}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-950/90 hover:bg-[#0B152B] text-[#F5D77F] hover:text-[#FFF2B2] border border-[#DFB76C] text-[10px] sm:text-[11px] font-bold backdrop-blur-md shadow-xl transition-all cursor-pointer active:scale-95 hover:shadow-[#D4AF37]/30 hover:scale-[1.02]"
-              title={`Click to select or drop PNG image to permanently set as ${title}`}
+              title={`Click to select or drop image to permanently set as ${title}`}
             >
               {isSaving ? (
                 <Loader2 className="w-3.5 h-3.5 text-[#DFB76C] animate-spin" />
               ) : (
                 <Upload className="w-3.5 h-3.5 text-[#DFB76C]" />
               )}
-              <span>Set PNG Photo Permanently</span>
+              <span>Set Photo Permanently</span>
             </button>
           </div>
         )}

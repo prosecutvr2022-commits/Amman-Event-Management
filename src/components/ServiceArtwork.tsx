@@ -13,9 +13,30 @@ interface ServiceArtworkProps {
 }
 
 export const ServiceArtwork: React.FC<ServiceArtworkProps> = ({ id, className = '', title }) => {
-  // Wedding has its own dedicated component that already has PNG only & Replace PNG
-  if (id === 'wedding' || id === 'g1') {
-    return <WeddingMandapArtwork className={className} title={title} />;
+  // Wedding - Grand Stage Decor & Full Coordination
+  if (id === 'wedding') {
+    return (
+      <PermanentPhotoSlot
+        id="wedding"
+        defaultLabel={title || "Wedding - Grand Stage Decor & Full Coordination"}
+        className={className}
+        title={title || "Wedding - Grand Stage Decor & Full Coordination"}
+        allowUpload={false}
+      />
+    );
+  }
+
+  // Grand Royal Wedding Reception Mandap (Gallery item g1)
+  if (id === 'g1' || id === 'grand-royal-wedding-reception-mandap') {
+    return (
+      <PermanentPhotoSlot
+        id="g1"
+        defaultLabel="Grand Royal Wedding Reception Mandap"
+        className={className}
+        title={title || "Grand Royal Wedding Reception Mandap"}
+        allowUpload={false}
+      />
+    );
   }
 
   // Melam & Nadhasvaram section
@@ -26,6 +47,7 @@ export const ServiceArtwork: React.FC<ServiceArtworkProps> = ({ id, className = 
         defaultLabel="Melam & Nadhasvaram"
         className={className}
         title={title}
+        allowUpload={false}
       />
     );
   }
@@ -38,6 +60,7 @@ export const ServiceArtwork: React.FC<ServiceArtworkProps> = ({ id, className = 
         defaultLabel="Aiyar"
         className={className}
         title={title}
+        allowUpload={false}
       />
     );
   }
@@ -50,6 +73,7 @@ export const ServiceArtwork: React.FC<ServiceArtworkProps> = ({ id, className = 
         defaultLabel="Manamakal Malai"
         className={className}
         title={title}
+        allowUpload={false}
       />
     );
   }
@@ -62,6 +86,7 @@ export const ServiceArtwork: React.FC<ServiceArtworkProps> = ({ id, className = 
         defaultLabel="Arkestra Music"
         className={className}
         title={title}
+        allowUpload={false}
       />
     );
   }
@@ -74,6 +99,7 @@ export const ServiceArtwork: React.FC<ServiceArtworkProps> = ({ id, className = 
         defaultLabel="Food Stall"
         className={className}
         title={title}
+        allowUpload={false}
       />
     );
   }
@@ -86,6 +112,7 @@ export const ServiceArtwork: React.FC<ServiceArtworkProps> = ({ id, className = 
         defaultLabel="Horse Chariot"
         className={className}
         title={title}
+        allowUpload={false}
       />
     );
   }
@@ -98,6 +125,7 @@ export const ServiceArtwork: React.FC<ServiceArtworkProps> = ({ id, className = 
         defaultLabel="Mack Up"
         className={className}
         title={title}
+        allowUpload={false}
       />
     );
   }
@@ -110,6 +138,7 @@ export const ServiceArtwork: React.FC<ServiceArtworkProps> = ({ id, className = 
         defaultLabel="Bridal & Groom"
         className={className}
         title={title}
+        allowUpload={false}
       />
     );
   }

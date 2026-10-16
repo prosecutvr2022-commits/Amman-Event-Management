@@ -136,7 +136,7 @@ export const CertifiedProfessionalSection: React.FC<CertifiedProfessionalSection
               >
                 <PermanentPhotoSlot
                   id="certified-award-balamurugan"
-                  defaultLabel="Certified Event Management Professional Award"
+                  defaultLabel="Award Presentation Ceremony"
                   title="J. Balamurugan receiving Certified Event Management Professional Award"
                   allowUpload={false}
                   className="w-full h-full"

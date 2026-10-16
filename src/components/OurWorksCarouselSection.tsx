@@ -123,8 +123,8 @@ export const OurWorksCarouselSection: React.FC<OurWorksCarouselSectionProps> = (
   const [lightboxWork, setLightboxWork] = useState<WorkItem | null>(null);
   const [touchStart, setTouchStart] = useState<number | null>(null);
 
-  // Custom photo overrides per work item (supports custom upload)
-  const [customPhotos] = useState<Record<string, string>>(() => {
+  // Custom photo overrides per work item (supports synchronized photos)
+  const [customPhotos, setCustomPhotos] = useState<Record<string, string>>(() => {
     const map: Record<string, string> = {};
     WORKS_DATA.forEach((w) => {
       try {
@@ -137,8 +137,41 @@ export const OurWorksCarouselSection: React.FC<OurWorksCarouselSectionProps> = (
     return map;
   });
 
+  const [versionTimestamp, setVersionTimestamp] = useState<number>(() => Date.now());
+
   const totalWorks = WORKS_DATA.length;
   const currentWork = WORKS_DATA[currentIndex];
+
+  // Sync across tabs and other components
+  useEffect(() => {
+    const handleSync = () => {
+      const map: Record<string, string> = {};
+      WORKS_DATA.forEach((w) => {
+        try {
+          const saved = localStorage.getItem(`amman_${w.id}_img`);
+          if (saved) map[w.id] = saved;
+        } catch {
+          // ignore
+        }
+      });
+      setCustomPhotos(map);
+      setVersionTimestamp(Date.now());
+    };
+
+    WORKS_DATA.forEach((w) => {
+      window.addEventListener(`amman_${w.id}_updated`, handleSync);
+    });
+    window.addEventListener('amman_works_updated', handleSync);
+    window.addEventListener('storage', handleSync);
+
+    return () => {
+      WORKS_DATA.forEach((w) => {
+        window.removeEventListener(`amman_${w.id}_updated`, handleSync);
+      });
+      window.removeEventListener('amman_works_updated', handleSync);
+      window.removeEventListener('storage', handleSync);
+    };
+  }, []);
 
   const nextSlide = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % totalWorks);
@@ -244,9 +277,12 @@ export const OurWorksCarouselSection: React.FC<OurWorksCarouselSectionProps> = (
                   />
                 ) : (
                   <picture className="w-full h-full block">
-                    <source srcSet={currentWork.imageSrc} type="image/webp" />
+                    <source
+                      srcSet={`${currentWork.imageSrc}?v=${versionTimestamp}`}
+                      type="image/webp"
+                    />
                     <img
-                      src={currentWork.fallbackPng}
+                      src={`${currentWork.fallbackPng}?v=${versionTimestamp}`}
                       alt={currentWork.title}
                       className="w-full h-full object-cover object-center select-none transition-transform duration-700 group-hover:scale-105 block"
                       loading="eager"
@@ -384,7 +420,7 @@ export const OurWorksCarouselSection: React.FC<OurWorksCarouselSectionProps> = (
           <div className="mt-6 grid grid-cols-4 sm:grid-cols-8 gap-2.5 pt-4 border-t border-slate-800/40">
             {WORKS_DATA.map((w, index) => {
               const isActive = index === currentIndex;
-              const photo = customPhotos[w.id] || w.imageSrc;
+              const photo = customPhotos[w.id] || `${w.imageSrc}?v=${versionTimestamp}`;
               return (
                 <button
                   key={w.id}
@@ -402,7 +438,7 @@ export const OurWorksCarouselSection: React.FC<OurWorksCarouselSectionProps> = (
                     alt={w.title}
                     className="w-full h-full object-cover object-center select-none"
                     loading="lazy"
-                    onError={(e) => handleImageErrorFallback(e, w.fallbackPng)}
+                    onError={(e) => handleImageErrorFallback(e, `${w.fallbackPng}?v=${versionTimestamp}`)}
                   />
                   <div className="absolute inset-0 bg-black/30 group-hover:bg-transparent transition-colors" />
                   <span className="absolute bottom-1 right-1 text-[9px] font-mono font-bold text-white bg-black/70 px-1 rounded">
@@ -448,14 +484,14 @@ export const OurWorksCarouselSection: React.FC<OurWorksCarouselSectionProps> = (
             <div className="relative aspect-square max-h-[70vh] bg-black flex items-center justify-center overflow-hidden">
               <picture className="w-full h-full flex items-center justify-center">
                 <source
-                  srcSet={customPhotos[lightboxWork.id] || lightboxWork.imageSrc}
+                  srcSet={customPhotos[lightboxWork.id] || `${lightboxWork.imageSrc}?v=${versionTimestamp}`}
                   type="image/webp"
                 />
                 <img
-                  src={customPhotos[lightboxWork.id] || lightboxWork.fallbackPng}
+                  src={customPhotos[lightboxWork.id] || `${lightboxWork.fallbackPng}?v=${versionTimestamp}`}
                   alt={lightboxWork.title}
                   className="w-full h-full object-contain select-none"
-                  onError={(e) => handleImageErrorFallback(e, lightboxWork.fallbackPng)}
+                  onError={(e) => handleImageErrorFallback(e, `${lightboxWork.fallbackPng}?v=${versionTimestamp}`)}
                 />
               </picture>
             </div>

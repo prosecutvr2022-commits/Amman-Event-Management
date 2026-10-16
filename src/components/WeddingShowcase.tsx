@@ -67,7 +67,7 @@ export const WeddingShowcase: React.FC<WeddingShowcaseProps> = ({ onPlanWedding 
               </div>
             </div>
 
-            {/* The Two Real Masterpiece Stage Photos with Set PNG Photo Permanently support */}
+            {/* The Two Real Masterpiece Stage Photos */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* Photo 1: Luminous Teal Lotus Halo Stage */}
               <GrandStageDecorSlot
@@ -76,6 +76,7 @@ export const WeddingShowcase: React.FC<WeddingShowcaseProps> = ({ onPlanWedding 
                 badgeLabel="Teal Halo Stage"
                 subLabel="Monogram Reception"
                 description="Bespoke reception stage featuring radiant warm backlit lotus petals, peacock teal drapery, suspended white wisteria canopy, floral monogram crest (JP), and fluted camel shell sofa."
+                allowUpload={false}
                 onOpenLightbox={() =>
                   setSelectedPhoto({
                     src: getAssetUrl('images/grand-stage-teal-halo.webp'),
@@ -91,6 +92,7 @@ export const WeddingShowcase: React.FC<WeddingShowcaseProps> = ({ onPlanWedding 
                 badgeLabel="Andal Mandapam"
                 subLabel="Sacred Muhurtham"
                 description="Grand South Indian Muhurtham mandapam with carved golden Dravidian temple pillars, dual deity sanctum shrines, dense pink and red rose floral wall, and royal silver chaise throne."
+                allowUpload={false}
                 onOpenLightbox={() =>
                   setSelectedPhoto({
                     src: getAssetUrl('images/grand-stage-aandal-mandap.webp'),
